@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+- 2.2.5
+sudo: false
+script: bundle exec rake deploy
+addons:
+  apt:
+    packages:
+    - graphviz
+env:
+  global:
+    secure: kzwYRZ/1yLXlCOO/9k+znD1DZloz1aq4QPeSznEbMoRzNca1D+rkjpzu+59dsqsS/TvuiEl+I5MlkBWbkK0k9t6+7qj3d6yYIlfDIgp7B8EWBC7nMFq9tXL/Wm7Tw8lVzyQcos+wN4d5rIAS/XdJ2aetdPuczvTyux9s1tq8jhtlSsISl5ywc8u3RrFpWlXBYozXtYqM9UhNkQsxH3Y8fqQ9aJbqUnNr0VGOPPGJ2jH9wjs655T3HlnBXYVzfKJGVukMgDZEYOFXezX9ow46ydqMXcUNQy/bmT1Swec1x9bwseLz3RKl/fu2huXfB3JGmo8OlUeARkhpLPi4PS3WlDc6f0EsqaoPBBJAd/Pk07z4ZbCw0Ii3u9oSna8H3ZitYoUouzCvZQstOdp5qSnHkhVSusl98uwouGQH92bDHOLZKJvvBuMkeTpXQkFrBsdpFxJ6LiAU9dvax29vzXRMKt8QkikNhc4G03gtGsmdaiy+VKHxLoaQhW2zpVSmTXx+xNI01UfOVD2fLBSBppK030hgMk3ieIk/mglHDGMw06E31EDqMGN1GIE1hMlHEDBaW8N9JGOg2A4rH5J1ZjCqpbnK7NpHjHd+nqEdezT7gc1o4RrkJcOTcFlmUgFxKlJS9p1tL5lX5KW53nDL/91qTEdsFfP1A80ZoJ/Xz0V8/Q4=
