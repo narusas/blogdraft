@@ -1,6 +1,6 @@
-= Asciidoc으로 작성하는 Github Pages
+= Github pages + jekyll + asciidoc + asciidoc diagram
 Jisung, Ahn <narusas.gmail.com>
-v1.0, 2017-11-21
+v1.0, 2018-03-12
 :showtitle:
 :page-navtitle: Asciidoc으로 작성하는 Github Pages
 :page-root: ../../../
@@ -8,3 +8,73 @@ v1.0, 2017-11-21
 {revdate}
 
 Markdown이 간단한 블로깅을 하기에 좋은 도구입니다만, 문법의 혼란과 github에서 지원하는 플러그인의 제한등이 다른 해결책을 찾아 헤메게 만듭니다.
+
+==  환경
+
+* Github
+ - draft repository:
+ - 대표 페이지  repository: username.github.io
+
+* 작성  PC
+
+== 작성환경 만들기
+
+
+
+
+=== install ruby
+==== 현재 버전 확인
+ which ruby
+   /usr/bin/ruby  기본 설치되어 있는 루비
+
+==== rvm 설치
+ rmv(ruby version manager)를 설치합니다.
+
+\curl -sSL https://get.rvm.io | bash -s stable
+ rvm reload
+ rvm list known 으로 확인
+ rvm install ruby-2.4
+ rvm use 2.4
+ which ruby
+  /Users/narusas/.rvm/rubies/ruby-2.4.1/bin/ruby 짜잔 루비가 바뀌었어요
+
+ gem install bundler
+ gem install travis
+
+===  작업용 repo 생성
+
+github에서 저장소 생성. 이때   https://github.com/asciidoctor/jekyll-asciidoc-quickstart 를 fork 받는게 빠르다.
+
+blogdraft 정도로 이름을 변경한다
+
+소스를 내려받는다
+git clone [repo_url]
+
+
+===  Gemfile 생성
+Gemfile 을 열어 빠진 것을 추가한다
+
+
+```
+source 'https://rubygems.org'
+
+gem 'jekyll', '~> 3.7.0'
+gem 'coderay', '~> 1.1.0'
+gem 'rake-jekyll', '~> 1.1.0'
+gem 'jekyll-plantuml', '~> 1.1'
+gem 'jekyll-diagrams'
+
+group :jekyll_plugins do
+  gem 'jekyll-asciidoc', '~> 2.0.1'
+  gem 'asciidoctor-diagram'
+
+end
+
+```
+
+변경한후에
+bundle install  하면 설치된다.
+
+
+=== 퍼블리싱용 repo 생성
+github에서 저장소 생성. 이때   username.github.io 로 생성하면 독립적인 도메인을 받아서  http://username.github.io  로 접속할수 있게 된다.
