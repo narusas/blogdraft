@@ -5,6 +5,7 @@ v1.0, 2017-11-14
 :page-navtitle: Logging
 :page-root: ../../../
 :toc:
+:sectnums:
 
 {revdate}
 
@@ -17,11 +18,13 @@ v1.0, 2017-11-14
 image::/images/logging.jpg[Logs in river]
 
 === Logging Methods
-기록을 남기는 방법은 다양함
+기록을 남기는 방법은 다양함.
+
 
 ==== Printing
 가장 기초적인 것은 프린팅.
-```java
+[source,java]
+----
 System.out.println 을 이용해 정보를 콘솔(Console)에 출력하는 것.
 try {
   System.out.println("Prepare connect to "+ ip +":"+port);
@@ -32,7 +35,7 @@ catch(Exception ex) {
   System.out.println("Fail to connect");
   ex.printStackTrace();
 }
-```
+----
 
 하지만 콘솔 모니터를 보고 있어야만 하고, 시간이 지나면 확인이 불가능하기 때문에 초기에 프로그래밍을 학습하는 시기에만 잠깐 쓰고 말아야 함
 
@@ -44,15 +47,18 @@ catch(Exception ex) {
 다음은 로그를 파일에 저장하는 설정이다
 
 설정 파일: logback.groovy
-```
+[source,java]
+----
 appender("fileAppender", ch.qos.logback.core.FileAppender) {
    file = "/var/log/myapp.log"
 }
-```
+----
 (위 설정은 비동기성, 파일 롤링, 백업, 압축, 시간분할등 운영에서 필요한 설정을 싹 빼고 기술해본 설정입니다 ^^)
 
-다음은 전체 설정입니다, .
-```
+다음은 전체 설정입니다.
+
+[source,groovy,numbered]
+----
 import ch.qos.logback.classic.jul.LevelChangePropagator
 import ch.qos.logback.classic.sift.MDCBasedDiscriminator
 
@@ -229,7 +235,7 @@ if (STAGE != "P"){ //  운영환경에서는 설정되지 않아야 한다.
 
 
 //  운영 환경이 아니면 콘솔 출력을  활성화 한다.  운영 환경에서는 중복 로그 기록에 따른 성능 하락을 방지 하기 위해 콘솔 출력을  disable  시킨다.
-if (STAGE ## "P"){
+if (STAGE == "P"){
   root  INFO, ["${SYMBOL}_FILE_ASYNC"]
 
   //root  INFO, ["${SYMBOL}_FILE_ASYNC", "CONSOLE_ASYNC"]
@@ -237,12 +243,13 @@ if (STAGE ## "P"){
 else {
   root  DEBUG, ["${SYMBOL}_FILE_ASYNC",  "CONSOLE"]
 }
+----
 
-```
 
 
 설정은 이렇게 하고 그럼 로그는 코드상에서 기록하는 방법은 다음과 같습니다.
-```
+[source,java]
+----
 class MyApp {
   static final Logger log = Logger.getLogger(MyApp.class);
 
@@ -252,7 +259,7 @@ class MyApp {
     log.debug("Exit do shometing");
   }
 }
-```
+----
 
 Logger를 사용하는 방법은 뒤쪽에서 상세히 기술하겠습니다.
 
@@ -268,22 +275,25 @@ Logger를 사용하는 방법은 뒤쪽에서 상세히 기술하겠습니다.
 자바에서 로그를 기록할때 로그 프레임워크 에 대한 Facade로써 Logger 객체를 사용합니다.
 로그를 기록할때 보통 일정한 기준으로 그루핑할 필요가 있습니다.
 보통 클래스 단위로 그루핑 하는게 일반적입니다.
-```
+[source,java]
+----
 class MyApp {
   static final Logger log = Logger.getLogger(MyApp.class);
 }
-```
+----
 
 요즘에는 Lombok을 이용하여 선언식으로 사용하기도 합니다
-```
+[source,java]
+----
 @Slf4j
 class MyApp {
 }
-```
+----
 
 
 하지만 단일 클래스가 아니고 비지니스 단위로나 별도의 그루핑이 필요할때도 있습니다.
-```
+[source,java]
+----
 class Business1 {
   static final Logger log = Logger.getLogger("biz");
 }
@@ -291,17 +301,17 @@ class Business1 {
 class Business2 {
   static final Logger log = Logger.getLogger("biz");
 }
-```
+----
 이렇게 기술된 Logger는 서로 같은 Logger를 공유하게 됩니다. 기록도 그루핑 되어 기록됩니다.
 
 두가지를 혼용할수도 있습니다.
-```
+[source,java]
+----
 @Slf4j
 class MyApp {
-
   static final Logger bizLog = Logger.getLogger("biz");
 }--> log 와 bizLog를 사용할수 있습니다.
-```
+----
 
 === Log Details
 로그를 기록할때 프린팅에서처럼 단순히 문자열만 기록할수도 있습니다만, 보통은 추가적인 정보를 같이 기록합니다.
@@ -420,7 +430,8 @@ Logback 설정은 실행중에도 설정파일의 변경을 감지하여 재설�
 === Logging Exception
 
 다음중 예외를 정상적으로 기록하는 방법은 무엇일까요?
-```
+[source,java]
+----
 try {
 ...
 }
@@ -451,7 +462,7 @@ catch(Exception ex){
   log.error("Error reading configuration file", e);        //L
 
 }
-```
+----
 
 G와 L 만이 정답입니다.
 A,B는 컴파일도 않되고 나머지는 정상적인 stack trace가 출력되지 않거나 잘못된 메시지가 나옵니다.
@@ -468,7 +479,8 @@ Log Detail의 추가 정보를 참조 하세요
 === Logging Cross-cut
 하나의 작업을 위해 여러 클래스가 참여하지만, 해당 작업에 대한 로그를 모아서 봐야 할때는 별도의 독립된 이름을 가지는 Logger를 선언하여 같이 사용하세요
 
-```
+[source,java]
+----
 class Business1 {
   static final Logger log = Logger.getLogger("biz");
 }
@@ -476,7 +488,7 @@ class Business1 {
 class Business2 {
   static final Logger log = Logger.getLogger("biz");
 }
-```
+----
 
 이렇게 설정한후에 logback.groovy에 별도 파일로 기록 되게 할수도 있습니다.
 
@@ -489,7 +501,8 @@ Eclipse등 IDE에서 제공하는 코드 생성 기능을 이용하여도 좋지
 
 가급적이면 Lombok의 자동 코드 생성 기능을 이용하시면 됩니다.
 
-```
+[source,java]
+----
 @ToString
 class Business1 {
   static final Logger log = Logger.getLogger("biz");
@@ -500,7 +513,7 @@ class Business1 {
 class Business1 {
   static final Logger log = Logger.getLogger("biz");
 }
-```
+----
 
 === Logging entry/exit
 개발할때 로그를 기록한다면 보통 "현재 실행중인 정보의 snapshop"을 남기기 위해 인자값이나 임시값을 로그로 남기는 경우가 많습니다.
@@ -511,24 +524,27 @@ class Business1 {
 === Avoid String Concat or Log4j style guard clause
 
 로그 메시지를 남길때 인자값등을 남기고자 문자열을 합치는 구문을 만들때가 있습니다.
-```
+[source,java]
+----
 log.debug("Param:"+ param1+" Option:"+option);
-```
+----
 
 문제는 debug나 trace 로그가 운영에서도 문자열을 합치기 위해 CPU와 메모리가 소비된다는 것입니다.
 그래서 log4j 시절에는 다음과 같은 보호절(Guard clause)를 사용했습니다.
-```
+[source,java]
+----
 if(loger.isDebugEnabled()) {
   log.debug("Param:"+ param1+" Option:"+option);}
-```
+----
 
 리소스 낭비 문제는 없어졌지만 로그 한줄 기록하고자 로직 코드가 복잡해졌습니다.
 
 그래서 SLF4J에서는 다음과 같은 방법으로 기술하게 합니다.
 
-```
+[source,java]
+----
 log.debug("Param: {} Option: {}", param1, option);
-```
+----
 
 
 
@@ -540,7 +556,8 @@ debug로 레벨이 지정되어야 하는 로그를 INFO로 기록하면 지나�
 
 === Avoid side-effect
 로그를 기록하기 위해 호출하는 메소드중 부가 작용이 있는 것을 회피 해야 합니다.
-```
+[source,java]
+----
 log.debug("Param: {} Option: {}", param1.getValue(), option);
 
 ...
@@ -549,7 +566,7 @@ int getValue() {
   value ++;
   return value;
 }
-```
+----
 
 === Avoid System.out
 System.out.println 을 이용한 로그는 파일로 기록 되지 않으며, 그 순간에 보지 못하면 나중에 다시 볼수 없습니다.
@@ -557,7 +574,8 @@ console application이 아닌이상 System.out은 사용하시면 안됩니다
 
 === Avoid Infinite loop
 이런 코드는 toString을 호출하면 무한루프에 빠집니다 ㅠㅠ
-```
+[source,java]
+----
 class Node {
   String id;
   Node parent;
@@ -566,27 +584,29 @@ class Node {
     return id+" parent:"+parent+" child:"+childs;
   }
 }
-```
+----
 
 === Do not eat exception
 
 이거 하지 마세요 ㅠㅠ
-```
+[source,java]
+----
 try {
 ...
 }
 catch(Exception ex) {}
-```
+----
 
 최소한 로그에 기록이라도 해주세요
-```
+[source,java]
+----
 try {
 ...
 }
 catch(Exception ex) {
 log.error(ex);
 }
-```
+----
 
 
 
