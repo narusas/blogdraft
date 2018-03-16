@@ -9,5 +9,5 @@ gem 'jekyll-diagrams'
 group :jekyll_plugins do
   gem 'jekyll-asciidoc', '~> 2.0.1'
   gem 'asciidoctor-diagram'
-
+  
 end
