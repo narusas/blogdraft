@@ -3,12 +3,13 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-09
 :showtitle:
 :page-navtitle: Vue Event hook
+:page-description: Vue + Vue router 에서 발생하는 event hook의 종류와 타이밍에 대해 기술합니다. 
 :page-root: ../../../
 
 == What
 vue를 이용해서 이용해서 SPA(Single Page Application) 을 개발 하다보면 Event Hook이 실행 순서에 대해 알고 싶어집니다.
 
-내가 파악하 이벤트 훅에 대해 기술하고 각 이벤트 훅을 언제 쓰는게 좋을것인지 고민한 내용도 기술해보도록 합시다.
+이벤트 훅에 대해 기술하고 각 이벤트 훅을 언제 쓰는게 좋을것인지 고민한 내용도 기술해보도록 합시다.
 
 
 
