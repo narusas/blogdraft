@@ -3,6 +3,7 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-19
 :showtitle:
 :page-navtitle: Normalized data
+:page-description: 중첩 구조의 데이터를 정규화하여 중첩구조를 제거하고, 중복된 데이터를 배제하여 함수형 처리를 수행합니다. 
 :page-root: ../../../
 :toc:
 :sectnums:
