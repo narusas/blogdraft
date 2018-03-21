@@ -3,7 +3,7 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-19
 :showtitle:
 :page-navtitle: Normalized data
-:page-description: 중첩 구조의 데이터를 정규화하여 중첩구조를 제거하고, 중복된 데이터를 배제하여 함수형 처리를 수행합니다. 
+:page-description: 중첩 구조의 데이터를 정규화하여 중첩구조를 제거하고, 중복된 데이터를 배제하여 함수형 처리를 수행합니다.
 :page-root: ../../../
 :toc:
 :sectnums:
@@ -121,6 +121,7 @@ function articleComments(article) {
 
 WARNING: 물론 이렇게 요청시마다 검색하는 방식은 데이터의 양이 많지 않을때 사용 해야 하며, 데이터의 양이 아주 많다면 애초에 이런 형태의 JSON을 사용할수 없습니다.
 
+
 ## Vuex
 vuex 를 사용하는 환경에는 보통 다음과 같이 구성됩니다.
 
@@ -156,6 +157,8 @@ methods: {
   </ul>
 </div>
 ----
+
+NOTE: Vue.js에서 ``computed``는 원본이 바꾸지 않으면 캐싱된 값을 반환하기 때문에 성능 이슈도 해소될수 있습니다.
 
 ## normalizr
 데이터가 중첩구조일때 정규화를 직접 할수도 있습니다만 라이브러리를 이용해서 수행할수도 있습니다.
