@@ -7,6 +7,9 @@ v1.0, 2018-03-21
 :page-root: ../../../
 
 
+ES6에서 ``...``은 rest parameters, spread operator로  두군데서 쓰입니다.
+
+이게 하나의 함수에서 같이 사용되면 좀 헷갈릴수 있는데요
 
 [source,javascript]
 ----
@@ -30,15 +33,37 @@ console.log(o2)
 {message: "abc", age: 1, gener: "Male"}
 ----
 
+좀 헷갈리긴 해도 유용하긴합니다.
 
-RORO(Receive Object Return Object)패턴에서  응용
 
+위의 사용예를 RORO(Receive Object Return Object)패턴에서  응용해보면 다음처럼 활용할수 있습니다.
+
+NOTE: requiredParam 함수는 link:https://medium.freecodecamp.org/elegant-patterns-in-modern-javascript-roro-be01e7669cbd[RORO Pattern] 에서 가져왔다.
 
 [source,javascript]
 ----
+function requiredParam (param) {
+  const requiredParamError = new Error(
+   `Required parameter, "${param}" is missing.`
+  )
+ // preserve original stack trace
+  if (typeof Error.captureStackTrace === ‘function’) {
+    Error.captureStackTrace(
+      requiredParamError,
+      requiredParam
+    )
+  }
+ throw requiredParamError
+}
+
 class Exception {
-  constructor({message='error', ...payload}={message:'error'}){
+  constructor({
+    message=requireParam('message'),
+    ...payload
+  }={}){
     Object.assign(this, {message, ...payload});
   }
 }
 ----
+
+예외에 다양한 인자를 넘겨주지만 message는 필수값이고 나머지는 옵션일때 사용할수 있습니다.
