@@ -1,0 +1,44 @@
+# ES6 rest parameters 와 spread parameter
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2018-03-21
+:showtitle:
+:page-navtitle: ES6 rest parameters 와 spread parameter
+:page-description: ES6 rest parameters 와 spread parameter
+:page-root: ../../../
+
+
+
+[source,javascript]
+----
+let o = { message:'abc', age:1, gener:'Male'}
+console.log(o)
+{message: "abc", age: 1, gener: "Male"}
+
+// 여기에서 ...은 rest parameter operator
+let {message, ...r} = o;
+
+console.log(message);
+"abc"
+
+console.log(r)
+{age: 1, gener: "Male"}
+
+// 여기에서...은 spread object operator
+
+o2 = {message, ...r}
+console.log(o2)
+{message: "abc", age: 1, gener: "Male"}
+----
+
+
+RORO(Receive Object Return Object)패턴에서  응용
+
+
+[source,javascript]
+----
+class Exception {
+  constructor({message='error', ...payload}={message:'error'}){
+    Object.assign(this, {message, ...payload});
+  }
+}
+----
