@@ -1,6 +1,6 @@
 # ES6 rest parameters 와 spread parameter
 Jisung, Ahn <narusas.gmail.com>
-v1.0, 2018-03-21
+v1.0, 2018-03-23
 :showtitle:
 :page-navtitle: ES6 rest parameters 와 spread parameter
 :page-description: ES6 rest parameters 와 spread parameter
