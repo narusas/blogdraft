@@ -89,7 +89,6 @@ class UserBirthdayChangeRequest {
 class UserInfoInteractor {
   public void changeBirthday(@Valid UserBirthdayChangeRequest request){
     assert(userGradePolicy.acceptUserAge(request.getBirthday()));
-    …
   }
 }
 ----
