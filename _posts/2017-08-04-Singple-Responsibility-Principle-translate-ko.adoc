@@ -46,13 +46,14 @@ CFO,COO, CTO등의 C-레벨의 경영자들은 CEO에게 보고합니다. CFO는
 
 자 이제 다음 자바 코드를 보세요
 
-```
+[source, java]
+----
 public class Employee {
   public Money calculatePay();
   public void save();
   public String reportHours();
 }
-```
+----
 
 * calculatePay 메소드는 해당 직원의 계약, 상태, 근무 시간 등을 기준으로 특정 직원의 지급액을 결정하는 알고리즘을 구현합니다.
 * save 메소드는 Employee오브젝트가 관리하는 데이터를 엔터프라이즈 데이터베이스에 저장합니다.

@@ -58,7 +58,8 @@ Request Model에 기술해둔 Validation Rule은 공통화 되지 못하기 때�
 
 여기에서 어떤 trade-off 를 할것인가는 프로젝트 구성원의 성향에 따르게 되겠습니다만, 저는 견고한 레이어링을 하는것을 추천합니다..
 
-```
+[source,java]
+----
 @Controller
 class AController {
   @Data
@@ -91,4 +92,4 @@ class UserInfoInteractor {
     …
   }
 }
-```
+----

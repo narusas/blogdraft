@@ -1,4 +1,4 @@
-# Normalized data
+= Normalized data
 Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-19
 :showtitle:
@@ -10,7 +10,7 @@ v1.0, 2018-03-19
 
 중첩 구조의 데이터를 정규화하여 중첩구조를 제거하고, 중복된 데이터를 배제 할수 있게 됩니다.
 
-## 정규화 하기
+== 정규화 하기
 서버측에서는 비지니스 로직의 처리 용이성을 위해 여러 데이터를 논리적 구조에 따라 중첩 구조로 사용하는 경우가 많습니다.
 
 클라이언트에서 이렇게 중첩된 데이터 구조를 기반으로 애플리케이션을 구성하다 보면 복잡한 데이터 구조에 대해 변경을 시도할때 지나치게 많은 변경 처리가 발생하는 경우가 많습니다.
@@ -122,7 +122,7 @@ function articleComments(article) {
 WARNING: 물론 이렇게 요청시마다 검색하는 방식은 데이터의 양이 많지 않을때 사용 해야 하며, 데이터의 양이 아주 많다면 애초에 이런 형태의 JSON을 사용할수 없습니다.
 
 
-## Vuex
+== Vuex
 vuex 를 사용하는 환경에는 보통 다음과 같이 구성됩니다.
 
 .getters
@@ -160,7 +160,7 @@ methods: {
 
 NOTE: Vue.js에서 ``computed``는 원본이 바꾸지 않으면 캐싱된 값을 반환하기 때문에 성능 이슈도 해소될수 있습니다.
 
-## normalizr
+== normalizr
 데이터가 중첩구조일때 정규화를 직접 할수도 있습니다만 라이브러리를 이용해서 수행할수도 있습니다.
 
 링크 link:https://github.com/paularmstrong/normalizr[normalizr]

@@ -27,15 +27,20 @@ EMPLOYEE는 ADDRESS ADDRESS_ID로 향하는 외부키 ADDR_ID를 가진다. PHON
 파트타임 직원 목록을 주소와 전화번호를 포함하여 표시하고자 할때 다음과 같은 SQL을 작성할것이다.
 
 == Big database query(한방쿼리)
-```
+[source,sql]
+----
 SELECT E.*, A.*, P.* FROM EMPLOYEE E, ADDRESS A, PHONE P WHERE E.ADDR_ID = A.ADDRESS_ID AND E.EMP_ID = P.OWNER_ID AND E.STATUS = 'Part-time'
-```
+----
 
 이렇게 나온 데이터는 각 직원 마다 전화 번호를 출력하깅 위해 그루핑한후 포메팅해야 한다.
 
-| ID | Name | Address | Phone |
-| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222 |
-| 7890 |Jill Betty |606 Hurdman Ave., Ottawa |613-711-4566, 613-223-5678 |
+
+|====
+| ID | Name | Address | Phone 
+
+| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222 
+| 7890 |Jill Betty |606 Hurdman Ave., Ottawa |613-711-4566, 613-223-5678 
+|====
 
 위 예에 대응하는 객체 모델은 Employy, Address, Phone 클래스를 정의한다.
 
@@ -46,59 +51,64 @@ JPA에서 Employee는 Address와 OneToOne 관계이고, Phone과 OneToMany 관�
 
 
 == Simple JPQL
-```
+[source,sql]
+----
 Select e from Employee e where e.status = 'Part-time'
-```
+----
 
 직원 정보를  출력하기 위해서는  Employee에서 Address를 가져오고, 마찬가지로 모든 Phone을 가져오면된다.  출력된 결과는 SQL 버전과 동일하지만, JPA를 통해 생성된  SQL은 매우 다르다.
+|===
+| ID | Name | Address | Phone 
 
-| ID | Name | Address | Phone |
-| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222 |
-| 7890 | Jill Betty | 606 Hurdman Ave., Ottawa | 613-711-4566, 613-223-5678 |
-
+| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222 
+| 7890 | Jill Betty | 606 Hurdman Ave., Ottawa | 613-711-4566, 613-223-5678 
+|===
 
 == N+1 queries problem
 
-```
+[source,sql]
+----
 SELECT E.* FROM EMPLOYEE E WHERE E.STATUS = 'Part-time'
-...
-```
- 이 실행된 다음 N개(선택된 employee의 수)만큼의  Address를 select한다.
+----
+이 실행된 다음 N개(선택된 employee의 수)만큼의  Address를 select한다.
 
-```
+[source,sql]
+----
 SELECT A.* FROM ADDRESS A WHERE A.ADDRESS_ID = 123
 SELECT A.* FROM ADDRESS A WHERE A.ADDRESS_ID = 456
-...
-```
- 이 실행된 다음 N개(선택된 employee의 수)만큼의  Phone를 select한다.
+----
+이 실행된 다음 N개(선택된 employee의 수)만큼의  Phone를 select한다.
 
-```
+[source,sql]
+----
 SELECT P.* FROM PHONE P WHERE P.OWNER_ID = 789
 SELECT P.* FROM PHONE P WHERE P.OWNER_ID = 135
-...
-```
+----
 이것은 상당히 끔찍한 성능을 보여줄 것이다.(모든 객체가 메모리에 이미 캐쉬 되어 있지 않는한). JPA에서 이 문제를 해결하는 방법이 여럿 있다. 가장 흔하게 사용되는 방식은 Join fetching 이다.
 join fetch는 객체,  그 객체와 연관된 객체를 단일 쿼리를 통해 fetch하는 것이다.  JPQL에서 이것은 꽤나 쉽게 할수 있고, Join을 정의 하는 것과 유사하다.
 
 
 == JPQL with join fetch
 
-```
+[source,sql]
+----
 Select e from Employee e join fetch e.address, join fetch e.phones where e.status = 'Part-time'
-```
+----
 이 JPQL은  SQL 버전과 동일한 SQL을 생성해 낸다.
 
 
 == SQL for JPQL with join fetch
 
-```
+[source,sql]
+----
 SELECT E.*, A.*, P.* FROM EMPLOYEE E, ADDRESS A, PHONE P WHERE E.ADDR_ID = A.ADDRESS_ID AND E.EMP_ID = P.OWNER_ID AND E.STATUS = 'Part-time'
-```
+----
 이 코드는 동일한 결과를 보여 줄수 있으면서, 객체는 더욱 효율적으로 읽어오게 된다.
 
 JPA는 join fetch를 JPQL을 통해서만 지정할수 있으나, Eclipselink는 @JoinFetch  어노테이션을 이용해 특정 관계에 대해 항상 Join Fetch를  수행하게 할수 있다.
 다른 JPA 구현체들 중에는  EAGER 관계의 객체를 항상 join fetch하는 것도 있는데, 이것은 일견 좋은 아이디어 인거 같지만, 실제로는 매우 나쁜 아이디어이다.
 EARGER는 관계를 읽어 와야 하는 가를 정의하지, 데이터베이스에 어떻게 접근하느냐를 정의하는 것이 아니다.
+
 어떤 사용자가 객체의 모든 관계를 읽어 오게 하려고 할때, 만약 모든 관계를 join fetch를 이용해 가져온다면, 모든 ToMany 관계에 대한 거대한 조인(Outer 조인이 사용된다)을 걸게 되고, 거대한 중복 데이터를 읽어고게 된다.
 또한 parent, owner, manager 같은 ManyToOne 관계는 원래 공유 객체여야 하는데(보통은 cache된), join fech는 모든 child에 대해 중복된 부모 객체를 생성하게 되며, 이런 동작은 별개의 독리된 쿼리를 던지는 것(또는 캐쉬된)보다 나쁜 성능을 낼수 있다.
 
@@ -109,9 +119,10 @@ ToMany에 대해서는 진짜로 두번째 Join이 필요하며 이 조인은 �
 중첩된(Nested) join fetch는 JPQL에서 직접 지원하지 않는다. eclipselink는 중첩된 join fetch를 지원하는데, 쿼리 힌트인 "eclipselink.join-fetch"와 "eclipselink.left-join-fetch" 를 이용하면 된다.
 
 == Nested join fetch query hint
-```
+[source,java]
+----
 query.setHint("eclipselink.join-fetch", "e.projects.milestones");
-```
+----
 
 Join Fetch는 여러 경우에 최고의 솔류션이지만, 대단히 관계 DB 중심의 접근이기도 하다.
 더 창의적이고 객체 지향적은 솔류션은 Batch Fetching 이다. Batch Fetching은 전통적인 관계중심의 사고방식으로는 더 어렵게 느껴지겠지만, 일단 이해하고 나면 훨씬 강력하다.
@@ -121,19 +132,21 @@ JPA는 join fetch만 정의하고 있다. batch fetching 을 사용하기 위해
 
 == Batch fetch query hint
 
-```
+[source,java]
+----
 query.setHint("eclipselink.batch", "e.address");
 query.setHint("eclipselink.batch", "e.phones");
-```
+----
 batch fetch 를 실행해도 원래 쿼리가 실행된다. (단순히 employee만 가져오는). 차이점은 연관된 객체를 가져오는 방식에 있다.  일단 employee의 목록을 얻어온후 어느 한 employee의 address를 사용하기 위해 접근할때, 오직  앞서 SELECTED 된  모든 employee들의 모든 address를 가져온다.  batch fetching에는 여러 유형이 있으며,  JOIN 타입의 batch fetch의 SQL은 다음과 같이 생성된다.
 
 == SQL for batch fetch (JOIN)
 
-```
+[source,sql]
+----
 SELECT E.* FROM EMPLOYEE E WHERE E.STATUS = 'Part-time'
 SELECT A.* FROM EMPLOYEE E, ADDRESS A WHERE E.ADDR_ID = A.ADDRESS_ID AND E.STATUS = 'Part-time'
 SELECT P.* FROM EMPLOYEE E, PHONE P WHERE E.EMP_ID = P.OWNER_ID AND E.STATUS = 'Part-time'
-```
+----
 
 처음 볼때 join fetch를 사용한 1개의 sql 대신 3개의 sql이 실행된것을 볼수 있다. 3개의 쿼리가 실행 되었으니 더 느릴 것이라고 생각하기 쉽지만, 실제로는 대부분의 경우에 더 빠르다.
 1번 과  3번의 select의 차이는  거의 없다 (Pretty minimal).  최적화 되지 않은 예전 경우의 가장 큰 이슈가 N 번의 쿼리가 실행되는 것이였고, 그때는 차이가 100초가 1000초가 될수도 있었다.
@@ -157,20 +170,22 @@ batch fetch 타입의 지정은 쿼리 힌트 "eclipselink.batch.type"을 통해
 관계에 대해 상상 batch fetching을 사용하고자 한다면 @BatchFetch 어노테이션을 붙여 주면 된다.
 
 == Batch fetch query hints and annotations
-```
+[source,java]
+----
 query.setHint("eclipselink.batch.type", "EXISTS");
 @BatchFetch(type=BatchFetchType.EXISTS)
-```
+----
 
 EXISTS 옵션은 JOIN 옵션관 비슷하지만, Join 대신 exists와  sub-select 를 사용한다. 이 옵션의 장점은 lob이나 복잡한 쿼리를 에서 distinct 를 사용할 필요가 없다는 것이다.
 
 == SQL for batch fetch (EXISTS)
 
-```
+[source,sql]
+----
 SELECT E.* FROM EMPLOYEE E WHERE E.STATUS = 'Part-time'
 SELECT A.* FROM ADDRESS A WHERE EXISTS (SELECT E.EMP_ID FROM EMPLOYEE E WHERE E.ADDR_ID = A.ADDRESS_ID AND E.STATUS = 'Part-time')
 SELECT P.* FROM PHONE P WHERE EXISTS (SELECT E.EMP_ID FROM EMPLOYEE E, WHERE E.EMP_ID = P.OWNER_ID AND E.STATUS = 'Part-time')
-```
+----
 
 IN 옵션은 JOIN이나 EXISTS옵션과 많이 다르다. IN 옵션은 원래 select 쿼리를 사용하지 않고, 대신 객체의 ID를 IN 구절을 이용해 사용한다.
 IN 옵션의 장점은 원래 쿼리를 다시 실행할 필요가 없다는 것이고, 이것은 원래 쿼리가 복잡할수록 큰 이득을 준다.
@@ -182,19 +197,21 @@ IN 옵션의 이슈는 이미 읽어온 세트가 너무 많으면 IN 구절이 
 IN 옵션은 또한 SQL의 IN  파트가 동적으로 생성되는것이 지원되는 DB여야 한다.
 
 == SQL for batch fetch (IN)
-```
+[source,sql]
+----
 SELECT E.* FROM EMPLOYEE E WHERE E.STATUS = 'Part-time'
 SELECT A.* FROM ADDRESS A WHERE A.ADDRESS_ID IN (1, 2, 5, ...)
 SELECT P.* FROM PHONE P WHERE P.OWNER_ID IN (12, 10, 30, ...)
-```
+----
 
 Batch fetching은 쿼리 힌트에 점(.) 표기를 이용해 중첩시킬수 있다.
 
-== Nested batch fetch query hint
+==  Nested batch fetch query hint
 
-```
+[source,java]
+----
 query.setHint("eclipselink.batch", "e.projects.milestones");
-```
+----
 
 Batch fetching의 기능중 join fetch에서 제공되지  않는 것중에 하나가 바로 최적화된 트리 구조 읽기이다.  만약 트리구조에서 자식 관계에 @BatchFetch를 설정하면, 단일 쿼리가 각 레벨을 위해 실행된다.
 
@@ -210,23 +227,31 @@ Batch fetching의 기능중 join fetch에서 제공되지  않는 것중에 하�
 
 == Simple run (fetch address, phoneNumbers)
 
-| Query | Average (queries/minute) | %STD | %DIF (of standard) |
-| standard | 5897 | 0.5% | 0 |
-| join fetch| 14024| 1.1%| +137%|
-| batch fetch (JOIN) | 11190 | 4.5% | +89% |
-| batch fetch (EXISTS) | 13764 | 0.4% | +133% |
-| batch fetch (IN) | 14341 | 0.6% | +143% |
+|===
+| Query | Average (queries/minute) | %STD | %DIF (of standard) 
+
+| standard | 5897 | 0.5% | 0 
+| join fetch| 14024| 1.1%| +137%
+| batch fetch (JOIN) | 11190 | 4.5% | +89% 
+| batch fetch (EXISTS) | 13764 | 0.4% | +133% 
+| batch fetch (IN) | 14341 | 0.6% | +143% 
+
+|===
+
 
 첫번쨰 결과만 보면 join fetch가 상당히 좋아 보인다.  첫번째 테스트에서는 2개의 관계만 읽어 왔다. 더 많은 관계를 읽어 오면 어떻게 될까?
 
 == Complex run (fetch address, phoneNumbers, projects, manager, managedEmployees, emailAddresses, responsibilities, jobTitle, degrees)
 
+|===
+| Query | Average (queries/minute) | %STD | %DIF (of standard) 
 
-| Query | Average (queries/minute) | %STD | %DIF (of standard) |
-| standard | 1438 | 0.7% | 0% |
-| join fetch | 1121 | 0.4% | -22% |
-| batch fetch (JOIN) | 3395 | 3.8% | +136% |
-| batch fetch (EXISTS) | 3768 | 2.6% | +162% |
-| batch fetch (IN) | 3893 | 0.5% | +170% |
+| standard | 1438 | 0.7% | 0% 
+| join fetch | 1121 | 0.4% | -22% 
+| batch fetch (JOIN) | 3395 | 3.8% | +136% 
+| batch fetch (EXISTS) | 3768 | 2.6% | +162% 
+| batch fetch (IN) | 3893 | 0.5% | +170% 
+
+|===
 
 두번째 테스트를 보면 join fetch의 문제점이 들어 난다. join fetch는 실제로는  최적화 되지 않는 쿼리보다 느려진다. (-22%). 이건 본질적으로 여러 테이블을 조인하면 더 많은 데이터를 가져와서 처리해야 하기 때문이다.  반면에  batch fetch는 여전히 우월한 성능을 보여준다.

@@ -1,4 +1,4 @@
-# Functional JS patterns
+= Functional JS patterns
 Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-20
 :showtitle:
@@ -10,7 +10,7 @@ v1.0, 2018-03-20
 
 원문 : https://medium.com/dailyjs/functional-js-with-es6-recursive-patterns-b7d0813ef9e3
 
-## Head
+== Head
 배열의 첫번째 아이템을 반환한다.
 
 [source,javascript]
@@ -26,7 +26,7 @@ const array = [1,2,3,4,5]
 head(array) // 1
 ----
 
-## tail
+== tail
 첫번째 아이템을 제외한 나머지 배열을 반환
 
 [source,javascript]
@@ -49,7 +49,7 @@ tail(array) // [2,3,4,5]
 ----
 
 
-## Def
+== Def
 주어진  인자가 정의되어 있는지 반환한다.
 
 [source,javascript]
@@ -65,7 +65,7 @@ def(defined) // true
 def(doesntExist) // false
 ----
 
-## Undef
+== Undef
 주어진  인자가 정의되어 있지 않은지 반환한다.
 [source,javascript]
 ----
@@ -80,7 +80,7 @@ undef(defined) // false
 undef(doesntExist) // true
 ----
 
-## Copy
+== Copy
 배열을 복사한다
 
 [source,javascript]
@@ -99,7 +99,7 @@ array // [1,2,3,4,5]
 copied // [1,2,3,4,5,6]
 ----
 
-## Length
+== Length
 배열의 길이를 반환합니다. 배열 순회를 재귀를 통해 수행하는 전형적인 예입니다. 실제로는 array.length를 호출하시면됩니다.
 [source,javascript]
 ----
@@ -113,7 +113,7 @@ const array = [1,2,3,4,5]
 length(array) // 5
 ----
 
-## Reverse
+== Reverse
 역전된 배열을 반환합니다.
 
 [source,javascript]
@@ -131,7 +131,7 @@ reverse(array) // [5,4,3,2,1]
 Array.reverse()도 역전을 시킬수 있습니다만, 원래 배열의 데이터를 변경해버린다는 부작용이 있습니다.
 
 
-## First
+== First
 배열의 최초 N개만큼 포함하는 새로운 배열을 반환합니다.
 
 [source,javascript]
@@ -147,7 +147,7 @@ first(array, 3) // [1,2,3]
 ----
 
 
-## Last
+== Last
 주어진 배열의 끝 n개를 포함하는 새로운 배열을 반환합니다.
 
 [source,javascript]
@@ -162,7 +162,7 @@ const array = [1,2,3,4,5]
 last(array, 3) // [3,4,5]
 ----
 
-## Slice
+== Slice
 주어진 값을 특정 위치에 추가(Insert)한 새로운 배열을 반환한다
 
 [source,javascript]
@@ -181,7 +181,7 @@ const array = [1,2,4,5]
 slice(array, 2, 99) // [1,2,99,4,5]
 ----
 
-## isArray
+== isArray
 배열 여부를 반환한다. Array.isArray를 함수형으로 호출할수 있게 한다
 [source,javascript]
 ----
@@ -195,7 +195,7 @@ const array = [1,2,3,4,5]
 isArray(array) // true
 ----
 
-## Flatten
+== Flatten
 중첩된 배열을 단일 배열로 변환하여 반환한다.
 
 [source,javascript]
@@ -214,7 +214,7 @@ flatten([array1, array2]) // [1,2,3,4,5,6]
 ----
 
 
-## Swap
+== Swap
 배열의 두 값의 Swap된 새로운 배열을 반환한다
 [source,javascript]
 ----
@@ -235,7 +235,7 @@ swap(array, 0, 4) // [5,2,3,4,1]
 ----
 
 
-## Map
+== Map
 주어진 배열의 값을 순회하여 주어진 함수에 넘기고, 함수의 반환값을 수집하여 배열로 반환한다.  Array.map을 함수형으로 사용할수 있게 한다.
 
 [source,javascript]
@@ -260,7 +260,7 @@ map([1,2,3], double) // [2,4,6]
 ----
 
 
-## Filter
+== Filter
 주어진 배열을 순회하며 주어진 함수에 넘기고, 함수에서 참이 반환된 값만 수집하여 배열로 반환한다. Array.filter를 함수형으로 사용할수 있게 한다.
 [source,javascript]
 ----
@@ -294,7 +294,7 @@ filter(array, even) // [2,4]
 filter(array, odd) // [1,3,5]
 ----
 
-## Reject
+== Reject
 Filter의 반대로 거짓이 반환된 값만 배열로 반환한다.
 [source,javascript]
 ----
@@ -318,7 +318,7 @@ const array = [1,2,3,4,5]
 reject(array, even) // [1,3,5]
 ----
 
-## Partition
+== Partition
 주어진 배열을 두개의 배열로 쪼갠다. 하나는 주어진 함수에 인자로 넘겨 참을 반환 받은 값의 배열, 다른 하나는 반대로 거짓을 반환받은 값의 배열이다.
 
 [source,javascript]
@@ -335,7 +335,7 @@ const array = [0,1,2,3,4,5]
 partition(array, even) // [[0,2,4], [1,3,5]]
 ----
 
-## Reduce
+== Reduce
 배열이 주어졌을때  배열 값을 왼쪽에서 오른쪽 방향으로 순회하며 배열값과 accumulator를 함수에 인자로 넘겨 실행하고 최종적으로 단일 값을 반환한다 (배열이 아님)
 
 [source,javascript]
@@ -363,7 +363,7 @@ const flatten = (memo, x) => memo.concat(x)
 reduce([4,5,6], flatten, [1,2,3]) // [1,2,3,4,5,6]
 ----
 
-## ReduceRight
+== ReduceRight
 Reduce와 유사하나 배열을 오른쪽에서 왼쪽으로 순회한다.
 [source,javascript]
 ----
@@ -379,7 +379,7 @@ reduceRight([[0,1], [2,3], [4,5]], flatten, []) // [4, 5, 2, 3, 0, 1]
 ----
 
 
-## Partial
+== Partial
 함수와 인자 일부가 적용된 함수를 반환하여 나머지 인자를 추후에 넘겨받아 함수를 실행한다
 [source,javascript]
 ----
@@ -395,7 +395,7 @@ const add5to = partial(add, 5)
 add5to(10) // 15
 ----
 
-## SpreadArg
+== SpreadArg
 배열을 받은 함수를 인자 목록을 받게 변환한다.  Partial등에서 유용하게 사용할수 있다.
 [source,javascript]
 ----
@@ -412,7 +412,7 @@ const spreadAdd = spreadArg(add)
 spreadAdd(1,2,3,4,5) // 15
 ----
 
-## ReverseArg
+== ReverseArg
 인자 순서를 역전시킨다.
 
 [source,javascript]
@@ -439,7 +439,7 @@ percentToDec(25) // 0.25
 ----
 
 
-## Pluck
+== Pluck
 배열에서 속성값을 추출한다. map과 같이 쓰면 유용하다
 
 [source,javascript]
@@ -467,7 +467,7 @@ const products = [
 map(products, getPrices) // [10,5,1]
 ----
 
-## Flow
+== Flow
 함수 목록이 주어지면, 각 함수가 이전 실행된 함수의 반환값을 인자로 받아 실행된다.
 
 [source,javascript]
@@ -497,7 +497,7 @@ const products = [
 map(products, getFinalPrice) // [9.675, 4.8375, 0.9675]
 ----
 
-## Compose
+== Compose
 FLow와 유사하지만 실행순서가 꺼꾸로 수행된다. 좀더 자연스러운 함수 호출처럼 보일수 있다.
 
 [source,javascript]
@@ -516,7 +516,7 @@ map(products, getFinalPrice) // [9.675, 4.8375, 0.9675]
 ----
 
 
-## Min
+== Min
 배열에서 최소 값을 반환한다. 빈 배열이 주어지면 Infinity를 반환한다.
 
 [source,javascript]
@@ -537,7 +537,7 @@ min(array) // 0
 ----
 
 
-## Max
+== Max
 배열에서 최대 값을 반환한다. 빈 배열이 주어지면 - Infinity가 반환된다.
 [source,javascript]
 ----
@@ -556,7 +556,7 @@ const array = [0,1,2,3,4,5]
 max(array) // 5
 ----
 
-## Factorial
+== Factorial
 주어인 수에 해당하는 factorial 을 반환한다.
 
 [source,javascript]
@@ -570,7 +570,7 @@ const factorial = (x, acum = 1) => x ? factorial(x - 1, x * acum) : acum
 factorial(5) // 120
 ----
 
-## Fibonacci
+== Fibonacci
 피보나치 수열을 반환한다.
 
 [source,javascript]
@@ -584,7 +584,7 @@ const fib = x => x > 2 ? fib(x - 1) + fib(x - 2) : 1
 fib(15) // 610
 ----
 
-## Quicksort
+== Quicksort
 배열을 정렬한다
 [source,javascript]
 ----
@@ -605,7 +605,7 @@ const array = [8,2,6,4,1]
 quicksort(array) // [1,2,4,6,8]
 ----
 
-## Reduce 화 하기
+== Reduce 화 하기
 위에서 다룬 모든 함수들은 reduce 함수를 이용해서 구현할수 있다. reduce함수를 사용하면 대부분의 경우 더 나은 성능을 보여준다.
 [source,javascript]
 ----

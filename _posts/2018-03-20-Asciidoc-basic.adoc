@@ -1,4 +1,4 @@
-# Asciidoc 기본 사용법
+= Asciidoc 기본 사용법
 Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-21
 :showtitle:
@@ -12,17 +12,17 @@ asciidoc에 대한 간략한 사용법을 설명합니다.
 
 이 문서는 https://asciidoctor.org/docs/asciidoc-writers-guide/#a-new-perspective-on-tables 의 내용을 적당히 축약해서 번역한 내용입니다.
 
-## Asciidoctor
+== Asciidoctor
 지금 보고 있는 문서를 포함하여 문서는 asciidoc(https://asciidoctor.org/docs/what-is-asciidoc/) 으로 작성됩니다.
 기존에 문서 작성에 사용하던 docbook을 대체하는 도구이며, spring,linux 등 여러 곳에서 적용되고 있습니다.
 
 아스키독은 단순 텍스트 일 뿐입니다. 선호하는 텍스트 에디터로 열어서 보고 편집할수 있습니다.
 
 
-## Basic syntaxt
+== Basic syntaxt
 
 
-### 문단 (Paragraphs)
+=== 문단 (Paragraphs)
 문단은 빈줄로 구분됩니다. 빈줄이 없이 쓰여진 문장은 하나의 문단으로 인식 되어 이어 써집니다.
 
 다음과 같이 작성된 문장은
@@ -45,7 +45,7 @@ This journey begins one late Monday afternoon in Antwerp.Our team desperately ne
 To leave means code dismemberment and certain death.
 ```
 
-### 줄바꿈(line break)
+=== 줄바꿈(line break)
 문단 안에서도 줄바꿈을 쓰고 싶을때가 있습니다. 줄 끝에 ``+``를 붙이면 줄바꿈이 됩니다.
 
 [source,asciidoc]
@@ -86,7 +86,7 @@ Rubies are red,
 Topazes are blue.
 ....
 
-### 경고(Admonitions)
+=== 경고(Admonitions)
 사용자의 주의를 이끌어 내기 위해 경고를 쓰고 싶을때가 있습니다. 이를 위해 다음과 같은 경고구가 준비되어 있습니다.
 
 * NOTE
@@ -127,7 +127,7 @@ WARNING: 위험합니다.
 문서에  ``icons`` 속성을  설정을 이용해 아이콘을 사용할수도 있습니다.
 
 
-### Text formating
+=== Text formating
 아스키독은 문장을 강조하기 위해 Quoted text를 사용합니다.
 
 NOTE: Quoted text는 어떤 기호로 둘러싸여서 특별한 의미를 전달하는 문장을 의미합니다.
@@ -201,7 +201,7 @@ Quoted Text는 prefix형태로 속성을 부여할수 있습니다. 이를 통�
 
 이런 방법을 이용해 자유롭게 스타일을 추가 할수 있습니다.
 
-### 치환 방지
+=== 치환 방지
 만약 문장자체가 quoted text에서 사용하는 기호들을 사용하는 것이라면 어떻게 할까요?
 
 이스케이프 문자로서 ``\`` 를 해당 기호 앞에 기술해 주면 됩니다. 만약 기호가 ``__`` 또는 ``**``처럼 두글자로 된 기호 라면 이스케이프 문자도 두번 기술해주어야 합니다.
@@ -217,7 +217,7 @@ Quoted Text는 prefix형태로 속성을 부여할수 있습니다. 이를 통�
 \{two-semicolons} will appear {two-semicolons}, not resolved as ;;.
 ....
 
-### 목록(List)
+=== 목록(List)
 목록을 표시하고 싶다면 문단을 새로 시작하고 ``*`` 로 시작하는 문장을 작성하면 됩니다.
 
 .소스
@@ -319,7 +319,7 @@ Quoted Text는 prefix형태로 속성을 부여할수 있습니다. 이를 통�
 * Untracked file in git repository
 --
 
-#### 순서를 가지는 목록
+==== 순서를 가지는 목록
 순서를 가지는 목록을 만들고 싶다면 숫자를 붙이면 됩니다.
 .소스
 [source,asciidoc]
@@ -474,7 +474,7 @@ converter)
 . Seven
 --
 
-#### 이름 붙은 목록(Labeled list)
+==== 이름 붙은 목록(Labeled list)
 항목에 대한 설명을 위해서 자주 사용됩니다.
 
 * 구분자
@@ -595,7 +595,7 @@ Cloud Providers::
     . Rackspace
 --
 
-#### 복잡한 목록 내용
+==== 복잡한 목록 내용
 목록에 나와야 하는게 한줄짜리 문장이 전부일리가 없습니다.
 
 기본적으로 목록은 문단 취급을 받습니다. 따라서 줄 바꿈을 해도 이어 붙습니다.
@@ -731,7 +731,7 @@ NOTE: The header is optional.
 --
 ....
 
-### 링크와 이미지
+=== 링크와 이미지
 
 URL은 자동 인식됩니다.
 
@@ -800,7 +800,7 @@ The section <<images>> describes how to insert images into your document.
 --
 
 
-#### 이미지
+==== 이미지
 
 ``image::``를 이용해 이미지를 포함할수 있습니다.
 
@@ -833,7 +833,7 @@ image::sunset.jpg[Sunset,300,200]
 
 
 
-### 제목 (Titles)
+=== 제목 (Titles)
 
 아스키독은 3가지 타입의 제목을 지원합니다.
 
@@ -841,7 +841,7 @@ image::sunset.jpg[Sunset,300,200]
 * 섹션 제목
 * 블럭 제목
 
-#### 문서 제목
+==== 문서 제목
 문서 제목을 만들기 위해서는 문서의 첫 줄을 ``= `` 로 시작해야 합니다.
 
 .소스
@@ -868,7 +868,7 @@ According to Wikipedia...
 ....
 
 
-#### 문서 속성(Document attributes)
+==== 문서 속성(Document attributes)
 문서 헤더 다음에는 속성을 기술할수 있습니다. 속성은 ``:``으로 둘러쌓인 이름과 값으로 구성됩니다.
 
 .소스
@@ -917,7 +917,7 @@ Asciidoctor의 기본 설정값을 변경할때도 사용합니다.
 ....
 
 
-#### 섹션 제목
+==== 섹션 제목
 
 섹션은 ``=``를 이용해 표기할수 있습니다. 중첩 섹션이 될때마다 중첩 레벨이 증가합니다(0-based입니다)
 
@@ -959,7 +959,7 @@ Asciidoctor의 기본 설정값을 변경할때도 사용합니다.
 
 문서 제목 이후 첫 섹션 사이의 문장은 서문에 해당합니다.
 
-###  Block
+===  Block
 다양한 기호가 의미 블럭을 구성합니다.
 
 * ``....``:  입력한 그대로 문자열이 생성됩니다.
@@ -976,7 +976,7 @@ Asciidoctor의 기본 설정값을 변경할때도 사용합니다.
 ....
 
 
-#### 블럭 제목
+==== 블럭 제목
 블럭 위에 ``.`` 으로 시작하는 제목을 줄수 있습니다. (블럭은 문단, 목록, 다른 블럭 요소가 될수 있습니다.)
 
 .소스
@@ -998,9 +998,9 @@ Asciidoctor의 기본 설정값을 변경할때도 사용합니다.
 --
 
 
-### 빌딩 블럭
+=== 빌딩 블럭
 
-### 제한 블럭(Delimited block)
+=== 제한 블럭(Delimited block)
 블럭의 범위를 지정할수 있습니다. 이미 많이 보셨죠.
 
 .소스
@@ -1036,7 +1036,7 @@ The content inside is displayed as <pre> text.
 |===
 
 
-### Tables
+=== Tables
 Table delimiter로 둘러 쌓아 테이블을 표시할수 있다. 각 컬럼은 ``|``로 분기한다. 컬럼수는 속성으로 줄수 있다.
 
 .소스
@@ -1288,7 +1288,7 @@ CSV 파일을 읽어 들일수도 있습니다.
 
 
 
-### Source Code
+=== Source Code
 
 * [source] 블럭을 이용해 소스코드를 제공할수 있습니다.
 * [source,javascript] 블럭을 이용해 문법강조할 언어를 지정할수 있습니다.
@@ -1304,5 +1304,5 @@ CSV 파일을 읽어 들일수도 있습니다.
 
 
 
-### Replacement
+=== Replacement
 => (C) 같은 기호를 표현하기 위해 \=> \(C)  로 표기 하면 치환 됩니다.  이스케이핑을 위해  \\=>  로 표기하면 변환이 되지 않습니다.
