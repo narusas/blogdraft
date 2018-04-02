@@ -5,6 +5,7 @@ gem 'coderay', '~> 1.1.2'
 gem 'rake-jekyll', '~> 1.1.0'
 gem 'jekyll-plantuml', '~> 1.1'
 gem 'jekyll-diagrams'
+gem 'jekyll-sitemap' 
 
 group :jekyll_plugins do
   gem 'jekyll-asciidoc', '~> 2.0.1'
