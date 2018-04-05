@@ -1,0 +1,186 @@
+= 한글 Entity 클래스와 Mybatis
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2018-04-04
+:showtitle:
+:page-navtitle: 한글 Entity 클래스와 Mybatis
+:page-description: 한글 Entity 클래스와 Mybatis에 대해 기술합니다.
+:page-root: ../../../
+
+## 한글 Entity
+놀랍게도!! 자바에서는 한글을 명사로 사용할수 있습니다.
+
+변수명, 클래스명 등 이름이 나와야 하는 곳에 한글을 비롯한 유니코드를 적을수 있습니다.
+그래서 java 소스 파일은 utf-8 로 작성되어 있다는 전제로 javac 가 컴파일 하는게 기본이기도 합니다.
+
+바로 한글로 된 Entity 소스 예제를 봅시다.
+
+.한글 Entity 예제
+[source,java]
+----
+@Data
+class 상품기본정보 {
+  Long id;
+  String 상품명;
+  상품유형 상품유형 = 상품유형.회원상품;
+  이미지정보 대표이미지 = new 이미지정보();
+  String 상품연결URL;
+}
+
+@Data
+public class 이미지정보 {
+  String 경로명;
+  String 파일명;
+}
+
+
+public enum 상품유형 {
+  제휴상품, 회원상품;
+}
+----
+
+읽어보니 어떤가요? 바로 읽히지 않습니까? 이게 바로 모국어를 도메인 언어에서 바로 사용할때 얻을수 있는 효과입니다.
+
+## Persistent with JPA
+이제 이 엔티티 파일을 어떻게 DB에서 읽어올까요?
+
+물론 하이버네이트나 이클립스링크 같은 JPA 구현체를 이용할수 있습니다.
+
+[source, java]
+----
+@Entity
+@Table(name = "goods_base_info")
+@Getter
+@Setter
+@ToString(exclude = { "상품등록자" }, callSuper = false)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class 상품기본정보 extends AuditableEntity {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "GOODS_NO")
+  Long id;
+
+  @Size(max=300,  message = "상품명은 300글자 이내여야 합니다.")
+  @Column(name = "GOODS_NM")
+  String 상품명;
+
+  @Basic
+  @Convert("상품유형")
+  @Column(name = "GOODS_TP")
+  상품유형 상품유형 = deal.domain.entity.goods.상품유형.회원상품;
+}
+----
+
+이러면 간단하죠. 하지만 JPA를 사용하는 프로젝트가 많지 않고 대부분 mybatis를 사용하는 한국의 현실에서는 JPA는 채용하기 어렵습니다.
+
+
+## Persistent with Mybatis
+한국의 SI 에서는 mybatis를 이용해 SQL을 마음대로 조작하고 싶어하는 경우가 참 많습니다. 그래서 당연히 이를 지원할수 있어야겠죠.
+
+### Entity Source
+
+자바 소스는 변경할 필요가 없습니다.
+[source,java]
+----
+@Data
+class 상품기본정보 {
+  Long id;
+  String 상품명;
+  상품유형 상품유형 = 상품유형.회원상품;
+  이미지정보 대표이미지 = new 이미지정보();
+  String 상품연결URL;
+}
+
+@Data
+public class 이미지정보 {
+  String 경로명;
+  String 파일명;
+}
+
+
+public enum 상품유형 {
+  제휴상품, 회원상품;
+}
+----
+
+### SQL Source
+SQL 소스를 볼까요. 여러 테이블을 조인하여 결과를 얻을수 있습니다.
+
+[source, xml]
+----
+<select id="find상품정보"   parameterType="java.lang.Long"  resultMap="상품기본정보DetailMap" >
+  SELECT	/* 상품정보Mapper.find상품정보 */
+  <include refid="상품기본정보Columns" />
+  ,<include refid="상품요약정보Columns" />
+  ,<include refid="상품상세이미지정보Columns" />
+  ,<include refid="orderPkg.해쉬태그정보Mapper.해쉬태그정보Columns" />
+  ,<include refid="원트정보Columns"/>
+  from
+  t_goods_base_info		goods_base_info
+  LEFT OUTER JOIN		t_wnt_info 	wnt_info
+
+  .. 생략 ..
+
+  order by goods_dtl_img_info.EXP_PRIOR_RNK ASC
+</select>
+
+<sql id="상품기본정보Columns">
+  goods_base_info.GOODS_NO 				as '상품정보.id'
+  ,goods_base_info.GOODS_NM				as '상품정보.상품명'
+  ,goods_base_info.GOODS_LNK_URL			as '상품정보.상품연결URL'
+  ,goods_base_info.MAST_IMG_PATH_NM		as '상품정보.대표이미지.경로명'
+  ,goods_base_info.MAST_IMG_FILE_NM     	as '상품정보.대표이미지.파일명'
+</sql>
+
+<sql id="상품요약정보Columns">
+  goods_sumr_info.GOODS_CMNT_CNT 	as '상품요약정보.팔로우수'
+  ,goods_sumr_info.GOODS_WNT_CNT	as '상품요약정보.상품수'
+  ,goods_sumr_info.GOODS_TAG_CNT		as '상품요약정보.상품태그수'
+</sql>
+
+----
+
+각 컬럼에 대해 sub sql로 분리함으로써 재활용할수 있습니다.
+
+여기서 중요한 내용중에 하나는 sql 에서 column alias는 가급적 entity의 속성 구조와 맞추는 것입니다.
+
+alias명은 ``엔티티명.속성명.하위속성명`` 이렇게 구성되게 하는게 좋습니다.
+
+엔티티명으로 시작하면 테이블을 join 걸어도 엔티티명이 각 테이블에 대한 구분 역활을 해줍니다.
+
+여기에서 컬럼이 너무 많아요 라고 하실분도 많겠습니다만, 그게 성능에 영향을 주는 경우가 많지는 않습니다.
+
+성능에 영향이 갈거 같으면 별도의 result map을 만들면 그만이고, sub columns들을 의미별로 잘게 쪼개서 조합해서 사용하면 됩니다.
+
+### Result Map Source
+여기에서 사용하는 result map을 볼 차례입니다.
+
+[source,xml]
+----
+<resultMap id="상품기본정보DetailMap" type="deal.domain.entity.goods.상품기본정보">
+  <id property="id" column="상품정보.id"/>
+
+  <!-- 속성에 매핑 -->
+  <result property="상품명" column="상품정보.상품명"/>
+  <result property="상품연결URL" column="상품정보.상품연결URL"/>
+  <result property="상품유형" column="상품정보.상품유형"/>
+
+  <!-- 클래스를 이용한 속성 매핑 -->
+  <association property="대표이미지" javaType="deal.domain.entity.common.이미지정보">
+    <result property="경로명" column="상품정보.대표이미지.경로명"/>
+    <result property="파일명" column="상품정보.대표이미지.파일명"/>
+  </association>
+
+  <!-- Result Map을 이용한 속성 매핑 -->
+  <association property="상품요약정보" resultMap="상품요약정보Map"/>
+
+  <!-- Result Map을 이용한 컬렉션 속성 매핑 -->
+  <collection property="상품상세이미지정보" resultMap="상품상세이미지정보Map"/>
+</resultMap>
+----
+
+이렇게 result map을 사용하여 association이나 collection으로 만들어낼수가 있습니다.
+
+## 결론
+JPA 정도는 아니지만 Mybatis를 이용해 도메인 모델에 최대한 근접할수 있습니다.
+
+물론 code to enum converter등 mybatis  설정이 좀더 필요하겠지만 그렇게 어려운건 아닙니다.
