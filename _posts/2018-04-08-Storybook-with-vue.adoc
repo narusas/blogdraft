@@ -290,6 +290,38 @@ https://github.com/storybooks/storybook/tree/master/addons/viewport
 ### Background 애드온
 배경색을 변경하는 애드온이지만 현재 vue를 지원하지 않습니다. 이것때문에 고생하지 마세요.
 
+### template
+background 애드온이 아직 vue를 지원하지 않기때문에 쉽게 극복하기 위해  template 메소드를 만들어 사용합니다.
+
+.template.js
+[source, javascript]
+----
+const width = 640;
+const height = 720;
+
+export default function (content) {
+  return `
+  <div>
+  <span>Width: ${width}px Height: ${height}px</span>
+
+  <div style="border:1px dotted; border-color: #f00; width: ${width}px; height: ${height}x; background-color: #000">` + content + '</div></div>';
+};
+----
+
+.스토리에서 사용
+[source, javascript]
+----
+import template from './template.js';
+
+storiesOf('CategoryTitle', module)
+  .add('No title', () => ({
+    components: { CategoryTitle },
+    template: template('<category-title  />'),
+    methods: {},
+  }))
+----
+
+어차피 컴포넌트 템플릿이 문자열이기 때문에 가능한 편법입니다. 
 
 ### storybook-addon-vue-info 애드온
 2018-04-08 현재 이것만 단독으로 쓰면 상관없지만, knobs, note 등 다른 애드온과 같이 쓰면 오류가 납니다.
