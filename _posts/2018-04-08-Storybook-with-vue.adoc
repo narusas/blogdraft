@@ -3,7 +3,7 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-04-08
 :showtitle:
 :page-navtitle: Stroybook with Vue.js
-:page-description: Storybokk for vue 를 사용하는 방법
+:page-description: Storybook for vue 를 사용하는 방법
 :page-root: ../../../
 :page-tags: ['js', 'javascript', 'vue', 'vue.js', 'storybook']
 :toc: left
