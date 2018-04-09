@@ -261,6 +261,23 @@ story
 
 image::2018-04-08-Storybook-with-vue-05f25.png[]
 
+### Route 작성하기
+vue-router를 사용하는 컴포넌트에 대한 스토리를 작성하려면 storybook-vue-router 를 사용해야 합니다.
+그냥 임포트해서 decorator로 등록시키면 됩니다.
+
+[source,javascript]
+----
+import StoryRouter from 'storybook-vue-router';
+
+const story = storiesOf('공통/MainTabs', module);
+story
+  .addDecorator(withKnobs)
+  .addDecorator(StoryRouter());
+----
+
+자세한 사용법은 다음 URL을 참고 하세요 +
+https://github.com/gvaldambrini/storybook-router/tree/master/packages/vue
+
 
 ### Vieport 애드온
 중요한 애드온중에 하나입니다. viewport의 설정을 변경해 모바일 기기처럼 테스트 할수 있게 해줍니다.
