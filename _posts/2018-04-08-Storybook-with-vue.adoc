@@ -23,7 +23,7 @@ Storybook은 react, angular, vue등을 지원합니다. 하지만 시작을 reac
 
 기존에 개발중인 소스에 storybook을 설치합니다. 설치하는 김에 자주 사용되는 애드온도 같이 설치합시다
 
-[source,javascript]
+[source]
 ----
 npm install --save-dev @storybook/vue
 npm install --save-dev @storybook/addon-actions
@@ -174,7 +174,7 @@ storiesOf('공통/MainTabs', module)
   .add('Tab이 비엇을때 ', () => {
     return {
       components: { MainTabs },
-      template: template(`<main-tabs :tabs="tabs"/>`),
+      template: template('<main-tabs :tabs="tabs"/>'),
       data() {
         return {
           tabs: [
@@ -189,7 +189,7 @@ storiesOf('공통/MainTabs', module)
 ----
 
 ### 구조
-image::/images/storybook-components.png[Storybook Components]
+image::storybook-components.png[Storybook Components]
 
 ### 커스텀 Tags in Head
 Preview 영역이 우리가 작성한 story가 렌더링 되는 영역이며 이 영역은 iframe에 의해 생성됩니다.
@@ -223,7 +223,7 @@ storiesOf('공통/GNB + MainTabs', module);
 
 이렇게 ``/``를 구분자로 트리구조로 구성이 가능합니다.
 
-image::images/2018-04-08-Storybook-with-vue-459e1.png[]
+image::2018-04-08-Storybook-with-vue-459e1.png[]
 
 ### Knobs 사용하기
 모든 경우를 별개의 스토리로 만드는것은 힘든 일입니다. 변경 가능한 데이터 영역을 UI를 통해 변경해 가면서 테스트할수 있게 하는게 좋을것입니다.
@@ -252,14 +252,14 @@ story
 story
   .add('Empty cart', () => ({
       components: { StatusBar },
-      template: `<status-bar :cartCount="${cartCount(0)}"/>`,
+      template: '<status-bar :cartCount="${cartCount(0)}"/>',
     });
   })
 ----
 
 해당 스토리를 선택하면 스토리 하단 제어판에 Knobs 항목에서 숫자를 직접 입력할수 있습니다.
 
-image::images/2018-04-08-Storybook-with-vue-05f25.png[]
+image::2018-04-08-Storybook-with-vue-05f25.png[]
 
 
 ### Vieport 애드온
@@ -285,4 +285,7 @@ https://github.com/storybooks/storybook/tree/master/addons/viewport
 
 https://github.com/storybooks/storybook/blob/master/ADDONS_SUPPORT.md
 
-image::images/2018-04-08-Storybook-with-vue-e4e49.png[]
+image::2018-04-08-Storybook-with-vue-e4e49.png[]
+
+
+NOTE: 현재 사용중인 syntaxt highlight에서 ES6 template string을 지원하지 못하여 `  대인 ' 를 사용해 문자열을 표현했습니다.
