@@ -300,11 +300,8 @@ const width = 640;
 const height = 720;
 
 export default function (content) {
-  return `
-  <div>
-  <span>Width: ${width}px Height: ${height}px</span>
-
-  <div style="border:1px dotted; border-color: #f00; width: ${width}px; height: ${height}x; background-color: #000">` + content + '</div></div>';
+  return '<div><span>Width: ${width}px Height: ${height}px</span>'+
+  '<div style="border:1px dotted; border-color: #f00; width: ${width}px; height: ${height}x; background-color: #000">' + content + '</div></div>';
 };
 ----
 
@@ -321,7 +318,7 @@ storiesOf('CategoryTitle', module)
   }))
 ----
 
-어차피 컴포넌트 템플릿이 문자열이기 때문에 가능한 편법입니다. 
+어차피 컴포넌트 템플릿이 문자열이기 때문에 가능한 편법입니다.
 
 ### storybook-addon-vue-info 애드온
 2018-04-08 현재 이것만 단독으로 쓰면 상관없지만, knobs, note 등 다른 애드온과 같이 쓰면 오류가 납니다.
@@ -337,4 +334,4 @@ https://github.com/storybooks/storybook/blob/master/ADDONS_SUPPORT.md
 image::2018-04-08-Storybook-with-vue-e4e49.png[]
 
 
-NOTE: 현재 사용중인 syntaxt highlight에서 ES6 template string을 지원하지 못하여 `  대인 ' 를 사용해 문자열을 표현했습니다.
+NOTE: 현재 사용중인 syntaxt highlight에서 ES6 template string을 지원하지 못하여 `  대인 ' 를 사용해 문자열을 표현했습니다. 문자열 중간 ${} 표기가 있으면 ` 로 바꿔서 입력하셔야 합니다 
