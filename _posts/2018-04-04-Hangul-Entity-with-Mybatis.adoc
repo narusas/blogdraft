@@ -5,6 +5,7 @@ v1.0, 2018-04-04
 :page-navtitle: 한글 Entity 클래스와 Mybatis
 :page-description: 한글 Entity 클래스와 Mybatis에 대해 기술합니다.
 :page-root: ../../../
+:page-tags: ['java','mybatis','jpa']
 
 ## 한글 Entity
 놀랍게도!! 자바에서는 한글을 명사로 사용할수 있습니다.

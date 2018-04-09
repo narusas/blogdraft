@@ -1,0 +1,288 @@
+= Storybook with Vue.js
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2018-04-08
+:showtitle:
+:page-navtitle: Stroybook with Vue.js
+:page-description: Storybokk for vue 를 사용하는 방법
+:page-root: ../../../
+:page-tags: ['js', 'javascript', 'vue', 'vue.js', 'storybook']
+:toc: left
+
+
+## Storybook
+
+스토리북은 컴포넌트 단위로 개발을 하기 위한 도구입니다. 뷰어 용도로도 사용 가능하며 정적 파일로 빌드하여 사이트에 퍼블리싱할수도 있습니다.
+
+
+
+## Storybook for vue
+
+Storybook은 react, angular, vue등을 지원합니다. 하지만 시작을 react로 시작했기때문에 react는 잘 지원하는 반면, 다른 프레임워크는 다소 문제가 많습니다.
+
+웹팩설정이 항상 복잡해지기 때문에 설명 간소화를 위해 기존의 프로젝트가 ``vue-cli webpack project-name``으로 생성되었다고 가정하겠습니다.
+
+기존에 개발중인 소스에 storybook을 설치합니다. 설치하는 김에 자주 사용되는 애드온도 같이 설치합시다
+
+[source,javascript]
+----
+npm install --save-dev @storybook/vue
+npm install --save-dev @storybook/addon-actions
+npm install --save-dev @storybook/addon-knobs
+npm install --save-dev @storybook/addon-links
+npm install --save-dev @storybook/addon-notes
+npm install --save-dev @storybook/addon-viewport
+npm install --save-dev storybook-vue-route
+----
+
+
+
+
+
+### 설정 파일 생성
+
+``-c`` 옵션으로 설정파일 폴더를 지정할수 있습니다. 보통 ``.storybook`` 으로 폴더를 생성합니다.
+
+* webpack 설정 파일.
+아래 설정은 ``vue-cli``로 생성된 webpack 설정을 가져다 스토리북에서도 사용하기 위한 설정 파일입니다.
++
+.``.storybook/webpack.config.js``
+[source,javascript]
+----
+const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
+}
+
+// CSS 등 정적파일 로더 설정을 읽어옵니다.
+const vueLoaderConfig = require('../build/vue-loader.conf');
+
+module.exports = (storybookBaseConfig, configType) => {
+  storybookBaseConfig.module.rules.find(rule => rule.test.source.includes('vue')).options = vueLoaderConfig;
+  storybookBaseConfig.resolve  = {
+    extensions: ['.js', '.vue', '.json'],
+      alias: {
+        config: path.resolve(__dirname,'../build/config.json'),
+        vue$: 'vue/dist/vue.esm.js',
+        '@': resolve('src'),
+        'src': resolve('src'),
+        'assets': resolve('src/assets'),
+        lib: resolve('src/lib'),
+
+    },
+  };
+  return storybookBaseConfig;
+};
+----
+
+* 스토리 파일들을 읽어 등록하는 설정
++
+.``.storybook/config``
+[source,javascript]
+----
+import { configure  as vueConfigure} from '@storybook/vue'
+
+// automatically import all files ending in *.stories.js
+const req = require.context('../src/stories', true, /.stories.js$/);
+function loadStories() {
+  req.keys().forEach(filename => req(filename));
+}
+
+vueConfigure(loadStories, module);
+----
+
+* 애드온 설정
++
+.``.storybook/addons.js``
+[source,javascript]
+----
+import '@storybook/addon-actions/register';
+import '@storybook/addon-links/register';
+import '@storybook/addon-knobs/register';
+import '@storybook/addon-viewport/register';
+import '@storybook/addon-notes/register';
+----
+
+
+### 스토리 생성
+스토리 파일은 ``src/stories`` 하위에서 찾습니다. ``.storybook/config`` 에 경로가 설정되어 있습니다.
+상대 경로가 복잡해지는 문제를 방지하기 위해 src 하위 폴더를 사용합니다.
+
+작성해둔 컴포넌트에 대한 사용 스토리를 기술합니다.
+
+[source,javascript]
+----
+import Vue from 'vue';
+
+import { storiesOf } from '@storybook/vue';
+
+import MyButton from './Button.vue';
+
+storiesOf('MyButton', module)
+  .add('story as a template', () => '<my-button :rounded="true">story as a function template</my-button>')
+  .add('story as a component', () => ({
+    components: { MyButton },
+    template: '<my-button :rounded="true">rounded</my-button>'
+  }));
+----
+
+### NPM Script 생성
+
+``package.json``  에 다음을 추가하여 스토리북 실행 스크립트를 추가합니다.
+
+[source,javascript]
+----
+{
+  "scripts": {
+    "storybook": "start-storybook -p 6006 -c .storybook -s ./ "
+  }
+}
+----
+
+* ``-p``: 개발 서버 포트 지정
+* ``-c``: 스토리북 설정 파일 폴더 경로 지정
+* ``-s``: 정적 파일 URL 매핑 루트 지정. http://localhost:6006/static/images/logo.jpg  경로중 /static/images/logo.jpg 를 찾기 위한 경로. node 프로젝트의 경우 프로젝트 루트 폴더에 static 으로 지정되는 경우가 많으나 /static 이라는 텍스트가 URL에 포함되는 경우도 많기 때문에 지정함.
+
+### 스토리북 실행
+
+[source,javascript]
+----
+npm run storybook
+----
+
+로 실행하고 웹브라우저에서 http://localhost:6006 으로 접속해보시면 됩니다.
+
+
+## 심화
+여기까지의 내용은 기존에도 다른 문서들이나 블로그등이 있었습니다.
+
+https://storybook.js.org/basics/guide-vue/
+
+http://vuejs.kr/vue/storybook/2017/09/21/vue-storybook/
+
+
+여기서 부터는 조금 더 들어간 내용을 다뤄봅니다.
+
+### 복잡한 데이터 넘기기
+단순 문자열이나 숫자가 아닌 복잡한 데이터를 props에 넘기기 위해서는 vue의 구조를 이용해야 합니다.
+
+우리가 작성한 story 자체가 하나의 vue 컴포넌트 이기 때문에 data 속성을 정의할수 있습니다. data로 선언된 객체를 ``:``표기법을 이용해 넘기면 됩니다.
+
+[source,javascript]
+----
+storiesOf('공통/MainTabs', module)
+  .add('Tab이 비엇을때 ', () => {
+    return {
+      components: { MainTabs },
+      template: template(`<main-tabs :tabs="tabs"/>`),
+      data() {
+        return {
+          tabs: [
+            { id:1, name: 'Home Menu', cssClass: 'home', },
+            { id:2, name: 'Menu 1',  },
+            { id:3, name: 'Menu 2', },
+          ],
+        };
+      },
+    };
+  })
+----
+
+### 구조
+image::/images/storybook-components.png[Storybook Components]
+
+### 커스텀 Tags in Head
+Preview 영역이 우리가 작성한 story가 렌더링 되는 영역이며 이 영역은 iframe에 의해 생성됩니다.
+생성시에 우리가 css나 js등을 포함하고 싶을수 있습니다. 또는 head 영역에 선언을 추가해야할수도 있습니다.
+이것을 위해 config 폴더(이 예제에서는 .storybook 폴더)에 ``preview-head.html``을 생성하면 이 파일이 preview 생성시 head 영역에 추가됩니다.
+
+
+### 정적파일 제공
+css, js, image등 정적파일을 개발서버에서 제공하고 싶다면 실행옵션에 ``-s`` 를 주어 폴더명을 주면됩니다. 복수의 폴더를 동시에 지정하고 싶으면 컴마를 구분자로 사용하세요.
+
+.package.json
+[source,javascript]
+----
+{
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public,./static -p 9001"
+  }
+}
+----
+
+
+### Grouping Stories
+스토리가 늘어나면 이 스토리들을 논리적으로 그룹핑할 필요가 생깁니다.  그렇다면 스토리명에 ``/``로 구분자를 넣어주면 됩니다.
+
+[source,javascript]
+----
+storiesOf('공통/Breadcrumb', module);
+storiesOf('공통/Gnb', module);
+storiesOf('공통/GNB + MainTabs', module);
+----
+
+이렇게 ``/``를 구분자로 트리구조로 구성이 가능합니다.
+
+image::images/2018-04-08-Storybook-with-vue-459e1.png[]
+
+### Knobs 사용하기
+모든 경우를 별개의 스토리로 만드는것은 힘든 일입니다. 변경 가능한 데이터 영역을 UI를 통해 변경해 가면서 테스트할수 있게 하는게 좋을것입니다.
+
+일단 knobs 애드온을 임포트합니다.
+
+[source,javascript]
+----
+import { withKnobs, text, boolean, number, select } from '@storybook/addon-knobs/vue';
+----
+
+knobs에서는 다양한 변경점(knob) 제공합니다.
+
+예를들어 숫자를 변경할수 있는 number를 사용하면 다음과 같이 작성할수 있습니다.
+
+[source,javascript]
+----
+export function cartCount(count = 8) {
+  return number('Cart No', count);
+}
+
+storiesOf('Common/StatusBar', module);
+story
+  .addDecorator(withKnobs);
+
+story
+  .add('Empty cart', () => ({
+      components: { StatusBar },
+      template: `<status-bar :cartCount="${cartCount(0)}"/>`,
+    });
+  })
+----
+
+해당 스토리를 선택하면 스토리 하단 제어판에 Knobs 항목에서 숫자를 직접 입력할수 있습니다.
+
+image::images/2018-04-08-Storybook-with-vue-05f25.png[]
+
+
+### Vieport 애드온
+중요한 애드온중에 하나입니다. viewport의 설정을 변경해 모바일 기기처럼 테스트 할수 있게 해줍니다.
+하지만 2018.04.08 현재 안정 버전(3.4.0)은 기기 종류를 추가할수 없습니다.
+
+https://github.com/storybooks/storybook/tree/master/addons/viewport
+
+에서 기술된 옵션들은 차기 버전에서 지원될 것으로 보입니다.
+
+### Background 애드온
+배경색을 변경하는 애드온이지만 현재 vue를 지원하지 않습니다. 이것때문에 고생하지 마세요.
+
+
+### storybook-addon-vue-info 애드온
+2018-04-08 현재 이것만 단독으로 쓰면 상관없지만, knobs, note 등 다른 애드온과 같이 쓰면 오류가 납니다.
+
+
+
+### 애드온 호환성
+
+스토리북의 애드온중 vue와 호환 되지 않는 애드온이 많습니다.
+
+https://github.com/storybooks/storybook/blob/master/ADDONS_SUPPORT.md
+
+image::images/2018-04-08-Storybook-with-vue-e4e49.png[]
