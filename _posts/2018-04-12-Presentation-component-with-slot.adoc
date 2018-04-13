@@ -51,8 +51,8 @@ Presentation 컴포넌트 제작과정에서 다음과 같은 상황을 흔히 �
 ----
 <template>
   <ul class="leftMenu"  :class="{ [$style.leftMenu]: isOpen }">
-    <li is="menu-header" @closeClicked="closedClicked"/>
-    <li is="main-logo" :mainLogoType="mainLogo" @click.stop="mainLogoClicked"/>
+    <li is="menu-header" v-on:closeClicked="closedClicked"/>
+    <li is="main-logo" :mainLogoType="mainLogo" v-on:click.stop="mainLogoClicked"/>
     <li is="sub-brand-logo" v-if="isSubBrand" :selectedBrand="selectedBrand"/>
     <li is="upper-brand-link" v-if="hasUpperBrand" :upperBrand="upperBrand"/>
     <ul class="category">
@@ -116,12 +116,12 @@ NOTE: 물론 UI만을 위한 이벤트는 프레젠테이션 컴포넌트에서 
   <left-menu>
     <menu-header
       slot="menu-header"
-      @closeClicked="closedClicked"/>
+      v-on:closeClicked="closedClicked"/>
 
     <main-logo
       slot="main-logo"
       :mainLogoType="mainLogo"
-      @click.stop="mainLogoClicked"/>
+      v-on:click.stop="mainLogoClicked"/>
 
     <sub-brand-logo
       slot="sub-brand-logo"
