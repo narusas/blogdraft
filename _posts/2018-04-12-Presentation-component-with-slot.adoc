@@ -7,7 +7,6 @@ v1.0, 2018-04-12
 :page-root: ../../../
 :page.tags: ['javascript','vue','component', 'vuejs]
 
-
 Presentation 컴포넌트 제작과정에서 다음과 같은 상황을 흔히 만나게 됩니다.
 
 * 컴포넌트를 논리적으로 작게 쪼개서 만든다.
