@@ -47,7 +47,7 @@ Presentation 컴포넌트 제작과정에서 다음과 같은 상황을 흔히 �
 그리고 만들고 나면 이것을 합쳐야 하는데..
 
 .LeftMenu.vue
-[source, htmlt]
+[source, html]
 ----
 <template>
   <ul class="leftMenu"  :class="{ [$style.leftMenu]: isOpen }">
@@ -110,7 +110,7 @@ NOTE: 물론 UI만을 위한 이벤트는 프레젠테이션 컴포넌트에서 
 이제 이 프레렌테이션에 대응하는 컨테이너 컴포넌트는 다음처럼 구성 될 겁니다.
 
 .LeftMenuContainer.vue
-[source, htmlt]
+[source, html]
 ----
 <template>
   <left-menu>
