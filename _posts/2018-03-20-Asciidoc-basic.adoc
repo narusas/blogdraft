@@ -5,8 +5,11 @@ v1.0, 2018-03-21
 :page-navtitle: Asciidoc 기본 사용법
 :page-description: Asciidoc의 기본 문법을 설명한다
 :page-root: ../../../
+:page-tags: ['asciidoc','asciidoctor']
 :toc:
 :sectnums:
+
+
 
 asciidoc에 대한 간략한 사용법을 설명합니다.
 

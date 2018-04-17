@@ -5,6 +5,7 @@ v1.0, 2017-08-04
 :page-layout: post
 :page-navtitle: 단일 책임 원칙
 :page-root: ../../../
+:page-tags: ['OOP', 'OOD', 'SRP', 'design pattern']
 
 {revdate}
 
