@@ -2,6 +2,7 @@ title: narusas's blog
 description: SW,IT에 대해 끄적입니다
 permalink:     date
 url: https://narusas.github.io
+logo: '/images/narusas-logo.png'
 keep_files:
   - images
 exclude:
@@ -11,6 +12,21 @@ exclude:
   - Gemfile.lock
   - Rakefile
   - vendor
+  - sync.sh
+author:
+  name: Jisgun, Ahn
+  description: 기술과 과학, 그리고 게임을 좋아하는 개발자 입니다.
+  contact:
+    github: https://github.com/narusas
+
+nav:
+  Home:
+    - '/'
+  About:
+    - '/about/'
+  Github Project:
+    - 'https://github.com/narusas'
+
 asciidoc: {}
 asciidoctor:
   base_dir: :docdir
