@@ -1,0 +1,15 @@
+= About
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2018-03-21
+:showtitle:
+:page-layout: empty
+:page-navtitle: about me
+:page-description: about me
+:page-root: ../../../
+
+
+Name: Jisung, Ahn
+
+Description: 기술과 과확 그리고 게임을 좋아하는 개발자입니다.
+
+Github: https://github.com/narusas
