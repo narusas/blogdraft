@@ -5,7 +5,8 @@ v1.0, 2018-03-28
 :page-navtitle: JS에서 비동기 프로그래밍
 :page-description: JS에서 비동기 프로그래밍에 대해 이야기합니다.
 :page-root: ../../../
-:page.tags: java mybatis jpa
+:page-tags: ['js','promise','asynchronouse']
+
 
 
 == Single Thread

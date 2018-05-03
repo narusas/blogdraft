@@ -3,7 +3,8 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-03-09
 :showtitle:
 :page-navtitle: Vue Event hook
-:page-description: Vue + Vue router 에서 발생하는 event hook의 종류와 타이밍에 대해 기술합니다. 
+:page-description: Vue + Vue router 에서 발생하는 event hook의 종류와 타이밍에 대해 기술합니다.
+:page-tags: ['vue','vuejs','event hook','life cycle']
 :page-root: ../../../
 
 == What

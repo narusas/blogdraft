@@ -4,6 +4,7 @@ v1.0, 2018-03-21
 :showtitle:
 :page-navtitle: Vue router의 path to regexp
 :page-description: Vue-router의 URL 표기법인  path-to-regexp의 문법을 소개합니다.
+:page-tags: ['vue','vue-router','path-to-regexp','url']
 :page-root: ../../../
 
 

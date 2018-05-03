@@ -2,8 +2,10 @@
 Jisung, Ahn <narusas.gmail.com>
 v1.0, 2017-11-14
 :showtitle:
-:page-navtitle: Logging
 :page-root: ../../../
+:page-navtitle: Logging Guide
+:page-description: 어플리케이션 로깅에 대한 가이드 제공
+:page-tags: ['logging','log','best practice','application logging']
 :toc:
 :sectnums:
 

@@ -3,6 +3,8 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2017-11-21
 :showtitle:
 :page-navtitle: Eclipse link Batch Fetching 객체 그래프 로딩을 최적화 하기
+:page-description: Eclipse link Batch Fetching 객체 그래프 로딩을 최적화 하기
+:page-tags: ['jpa','eclipselink','fetch','batch fetch']
 :page-root: ../../../
 
 {revdate}
@@ -36,10 +38,10 @@ SELECT E.*, A.*, P.* FROM EMPLOYEE E, ADDRESS A, PHONE P WHERE E.ADDR_ID = A.ADD
 
 
 |====
-| ID | Name | Address | Phone 
+| ID | Name | Address | Phone
 
-| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222 
-| 7890 |Jill Betty |606 Hurdman Ave., Ottawa |613-711-4566, 613-223-5678 
+| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222
+| 7890 |Jill Betty |606 Hurdman Ave., Ottawa |613-711-4566, 613-223-5678
 |====
 
 위 예에 대응하는 객체 모델은 Employy, Address, Phone 클래스를 정의한다.
@@ -58,10 +60,10 @@ Select e from Employee e where e.status = 'Part-time'
 
 직원 정보를  출력하기 위해서는  Employee에서 Address를 가져오고, 마찬가지로 모든 Phone을 가져오면된다.  출력된 결과는 SQL 버전과 동일하지만, JPA를 통해 생성된  SQL은 매우 다르다.
 |===
-| ID | Name | Address | Phone 
+| ID | Name | Address | Phone
 
-| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222 
-| 7890 | Jill Betty | 606 Hurdman Ave., Ottawa | 613-711-4566, 613-223-5678 
+| 6578 | Bob Jones | 17 Mountainview Dr., Ottawa | 519-456-1111, 613-798-2222
+| 7890 | Jill Betty | 606 Hurdman Ave., Ottawa | 613-711-4566, 613-223-5678
 |===
 
 == N+1 queries problem
@@ -228,13 +230,13 @@ Batch fetching의 기능중 join fetch에서 제공되지  않는 것중에 하�
 == Simple run (fetch address, phoneNumbers)
 
 |===
-| Query | Average (queries/minute) | %STD | %DIF (of standard) 
+| Query | Average (queries/minute) | %STD | %DIF (of standard)
 
-| standard | 5897 | 0.5% | 0 
+| standard | 5897 | 0.5% | 0
 | join fetch| 14024| 1.1%| +137%
-| batch fetch (JOIN) | 11190 | 4.5% | +89% 
-| batch fetch (EXISTS) | 13764 | 0.4% | +133% 
-| batch fetch (IN) | 14341 | 0.6% | +143% 
+| batch fetch (JOIN) | 11190 | 4.5% | +89%
+| batch fetch (EXISTS) | 13764 | 0.4% | +133%
+| batch fetch (IN) | 14341 | 0.6% | +143%
 
 |===
 
@@ -244,13 +246,13 @@ Batch fetching의 기능중 join fetch에서 제공되지  않는 것중에 하�
 == Complex run (fetch address, phoneNumbers, projects, manager, managedEmployees, emailAddresses, responsibilities, jobTitle, degrees)
 
 |===
-| Query | Average (queries/minute) | %STD | %DIF (of standard) 
+| Query | Average (queries/minute) | %STD | %DIF (of standard)
 
-| standard | 1438 | 0.7% | 0% 
-| join fetch | 1121 | 0.4% | -22% 
-| batch fetch (JOIN) | 3395 | 3.8% | +136% 
-| batch fetch (EXISTS) | 3768 | 2.6% | +162% 
-| batch fetch (IN) | 3893 | 0.5% | +170% 
+| standard | 1438 | 0.7% | 0%
+| join fetch | 1121 | 0.4% | -22%
+| batch fetch (JOIN) | 3395 | 3.8% | +136%
+| batch fetch (EXISTS) | 3768 | 2.6% | +162%
+| batch fetch (IN) | 3893 | 0.5% | +170%
 
 |===
 
