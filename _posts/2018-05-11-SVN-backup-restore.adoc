@@ -1,10 +1,10 @@
-= SVN 백업 및 복구, 증분백업, 증분복구
+= SVN 백업/복구, 증분백업/복구
 Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-05-11
 :showtitle:
 :page-navtitle: SVN 백업 및 복구, 증분백업, 증분복구
-:page-description: SVN 백업 복구와 너무 큰 저장소에 대해 증분 백업 복구를 다룹니다.
-:page-tags: ['svn','basckup','restore']
+:page-description: SVN 백업/복구 및  증분 백업/복구를 다룹니다.
+:page-tags: ['svn','backup','restore']
 :page-root: ../../../
 :toc:
 :sectnums:
