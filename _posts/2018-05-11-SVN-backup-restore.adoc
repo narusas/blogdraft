@@ -1,0 +1,90 @@
+= SVN 백업 및 복구, 증분백업, 증분복구
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2018-05-11
+:showtitle:
+:page-navtitle: SVN 백업 및 복구, 증분백업, 증분복구
+:page-description: SVN 백업 복구와 너무 큰 저장소에 대해 증분 백업 복구를 다룹니다.
+:page-tags: ['svn','basckup','restore']
+:page-root: ../../../
+:toc:
+:sectnums:
+
+== 덤프 받기
+
+=== 전체 덤프 받기
+
+----
+svnadmin dump /var/www/svn/reposA/  > ~/reposA.svn_dump
+----
+
+전체 저장소를 덤프 받습니다.
+
+=== 지정 덤프 받기
+----
+svnadmin dump /var/www/svn/reposA/ -r 10  > ~/reposA.svn_dump
+----
+리비전 10만 덤프 받습니다.
+
+=== 구간 덤프 받기
+----
+svnadmin dump /var/www/svn/reposA/ -r 10:20  > ~/reposA.svn_dump
+----
+리비전 10에서 20까지 덤프를 받습니다.
+
+=== 특정 폴더 덤프 받기
+----
+svnadmin dump /var/www/svn/reposA/ | svndumpfilter include WORK > ~/reposA.svn_dump
+----
+저장소에서 WORK 폴더만 덤프를 받습니다.
+
+=== 특정 폴더를 제외 하고덤프 받기
+----
+svnadmin dump /var/www/svn/reposA/ | svndumpfilter exclude TEMP > ~/reposA.svn_dump
+----
+저장소에서 TEMP 폴더만 제외하고 덤프를 받습니다.
+
+=== 특정 날짜부터 현재까지 덤프 받기
+----
+svnadmin dump /var/www/svn/reposA/ -r {2014-01-20}:HEAD > ~/reposA.svn_dump
+----
+저장소에서 TEMP 폴더만 제외하고 덤프를 받습니다.
+
+=== 증분 덤프 받기
+----
+svnadmin dump /var/www/svn/reposA/ -r 0:1000  > ~/repos-0-1000.svn_dump
+svnadmin dump /var/www/svn/reposA/ -r 1000:2000 --incremental > ~/repos-1000-2000.svn_dump
+svnadmin dump /var/www/svn/reposA/ -r 2000:3000 --incremental > ~/repos-2000-3000.svn_dump
+----
+구간별로 증분이 가능 하도록 덤프를 받습니다. load시 증분해서 복원이 가능 함.
+
+
+=== 백업하면서 압축하기
+----
+svnadmin dump /var/www/svn/reposA/  | gzip -9 > ~/reposA.svn_dump.gz
+----
+
+=== 압축 한거 풀기
+----
+gunzip ~/reposA.svn_dump.gz
+----
+
+== 덤프 복원하기
+
+덤프를 복원하기 위해서는 기존의 저장소나 빈 저장소가 있어야 합니다.
+
+svnadmin --help create 를 참고 하세요.
+
+=== 복원하기
+----
+svnadmin load /path/to/repo < ~/reposA.svn_dump
+----
+
+repo라는 저장소에 덤프 파일을 복원 합니다.
+
+=== 증분 덤프 복원하기
+----
+svnadmin /path/to/repo < ~/repos-0-1000.svn_dump
+svnadmin /path/to/repo < ~/repos-1000-2000.svn_dump
+svnadmin /path/to/repo < ~/repos-2000-3000.svn_dump
+----
+이전에 증분했던 순서대로 다시 차례대로 넣어 주면 됩니다.
