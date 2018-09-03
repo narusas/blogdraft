@@ -91,7 +91,7 @@ image::../images/2018-09-03-Big-data-architectures-23ab6.png[]
 * Orchestration: 작업들간의 의존관계를 관리하여 작업이 연속될수 있게 한다.
 
 == Big Data Solution Ecosystem
-image::images/2018-09-03-Big-data-architectures-bb94d.png[]
+image::../images/2018-09-03-Big-data-architectures-bb94d.png[]
 
 === Data Acquisition
 
