@@ -228,7 +228,7 @@ image::images/2018-09-03-Big-data-architectures-bb94d.png[]
 
 == My Choice
 
-image::images/2018-09-03-Big-data-architectures-34959.png[]
+image::2018-09-03-Big-data-architectures-34959.png[]
 
 * Data Acquisition
 ** Sqoop: DB Table/Queyr → HDFS 를 간단히 할수 있는 솔루션
