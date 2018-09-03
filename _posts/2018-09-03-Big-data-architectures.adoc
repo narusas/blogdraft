@@ -11,7 +11,7 @@ v1.0, 2018-09-03
 
 == System Overview
 
-image::images/2018-09-03-Big-data-architectures-3b501.png[]
+image::../images/2018-09-03-Big-data-architectures-3b501.png[]
 
 
 .구성
@@ -27,6 +27,7 @@ image::images/2018-09-03-Big-data-architectures-3b501.png[]
 데이터를 주기적으로 옮기는 곳을 스테이징이라고 합니다. 이때 저장되는 raw 데이터는 보통 용량이 매우 크기 때문에 대용량 저장이 가능한 메커니즘을 사용합니다.
 +
 실시간으로 전달할때는 채널이라고 부릅니다. 메시지 큐의 형태로 생산자와 소비자를 분리시키는 경우가 많습니다.
+
 
 
 * Batch Data Processing
@@ -67,7 +68,7 @@ image::images/2018-09-03-Big-data-architectures-3b501.png[]
 - 경고 도구
 
 == Building Blocks
-image::images/2018-09-03-Big-data-architectures-23ab6.png[]
+image::../images/2018-09-03-Big-data-architectures-23ab6.png[]
 
 시스템을 구성하기 위한 솔루션 빌딩 블럭에 대한 개요입니다.
 
@@ -228,7 +229,7 @@ image::images/2018-09-03-Big-data-architectures-bb94d.png[]
 
 == My Choice
 
-image::2018-09-03-Big-data-architectures-34959.png[]
+image::../images/2018-09-03-Big-data-architectures-34959.png[]
 
 * Data Acquisition
 ** Sqoop: DB Table/Queyr → HDFS 를 간단히 할수 있는 솔루션
@@ -274,4 +275,4 @@ image::2018-09-03-Big-data-architectures-34959.png[]
 
 == Building block applied
 
-image::images/2018-09-03-Big-data-architectures-9f3d2.png[]
+image::../images/2018-09-03-Big-data-architectures-9f3d2.png[]
