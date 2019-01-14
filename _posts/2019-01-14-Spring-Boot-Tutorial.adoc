@@ -1,0 +1,421 @@
+= Spring Boot Tutorial
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2019-01-14
+:toc:
+:toc-title: 목차
+:sectnums:
+:sectlinks:
+:showtitle:
+:page-navtitle: Spring Boot Tutorial
+:page-description: Spring Boot 따라하기
+:page-tags: ['spring','spring  boot','tutorial']
+:page-root: ../../../
+
+== Spring Boot 소개
+
+=== Spring Framework와의 차이점
+
+Spring Boot = Spring Framework + Default Configuration + Launcher + Plugins + Sever
+
+Spring Framework가 유연한 설정과 확장이 장점인 반면, 설정 하는 방법을 익히는데 시간이 너무 걸리는 단점이 있음.
+
+Spring Boot는 일반적으로 사용될만한 기본 설정을 제공하고, 이를 바로 실행 시킬수 있는 런처를 제공. 이를 위한 다수의 플러그인들도 제공 하여 빠른 시간안에 개발이 가능하게 함.
+
+설정 커스터마이징을 통해 Spring Framework의 기능을 모두 사용할수 있음. 엔터프라이즈급 어플리케이션도 개발 가능.
+
+
+== 설치
+Spring Boot는 2.0 부터 JDK 1.8 이상만 지원합니다.
+
+
+=== Gradle 설치
+의존성 관리및 빌드 도구로 maven과 gradle을 사용할수 있습니다. 여기에서는 gradle을 이용해서 투토리얼을 진행합니다.
+
+==== Download
+https://gradle.org/install/ 에서 최신 버전 다운로드 받기
+
+현재 최신 버전은 5.1
+
+* http://downloads.gradle.org/distributions/gradle-5.1.1-bin.zip
+
+==== 설치
+
+적당한 위치에 풀어 넣는다.
+
+추천위치: `C:\java\util\gradle`
+
+경로 중간에 공백이 들어가지 않는 위치가 좋습니다.
+
+사실 지금 내려 받은 gradle 은 딱 한번만 쓰일거라 어디에 두셔도 상관없습니다.
+
+=== 프로젝트 설치
+
+==== 프로젝트 폴더 만들기
+이클립스는 workspace 부터 만들어야 함
+
+----
+mkdir workspace
+mkdir workspace/MyProject
+----
+
+==== build.gradle 만들기
+build.gradle 파일을 만든다
+
+
+[source,groovy,numbered]
+----
+buildscript {
+  ext {
+    springBootVersion = '2.1.2.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
+plugins {
+  // gradle 내장 플러그인
+  id 'java'
+  id 'eclipse'
+  id 'eclipse-wtp'
+
+  // 다운로드해야 하는 플러그인. 버전 지정이 필요
+  id 'org.springframework.boot' version '2.1.2.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+}
+
+
+group = 'com.myproject'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+task initSrc  {
+  doLast {
+    project.sourceSets*.allSource.srcDirTrees.flatten().dir.each { dir ->
+      dir.mkdirs()
+    }
+  }
+}
+
+configurations {
+  developmentOnly
+  runtimeClasspath {
+    extendsFrom developmentOnly
+  }
+}
+
+dependencies {
+  implementation      'org.apache.commons:commons-lang3:3.8.1'
+  implementation      'org.apache.commons:commons-collections4:4.2'
+
+  implementation      'org.springframework.boot:spring-boot-starter'
+  implementation      'org.springframework.boot:spring-boot-starter-web'
+  implementation      'org.springframework.boot:spring-boot-starter-jdbc'
+
+
+  testImplementation  'org.springframework.boot:spring-boot-starter-test'	
+
+  developmentOnly     "org.springframework.boot:spring-boot-devtools"
+  providedRuntime     'org.springframework.boot:spring-boot-starter-tomcat'
+
+}
+
+
+----
+
+==== settings.gradle 만들기
+[source,groovy,numbered]
+----
+rootProject.name = 'MyProject'
+----
+
+==== Wrapper 만들기
+로컬에 설치된 gradle을 이용할수도 있지만, 좀더 여러곳에서 사용하기 쉽게 wrapper를 만듭니다. 이후에는 gradle wrapper만 사용할 겁니다.
+
+`~/java/util/gradle-5.1.1/bin/gradle wrapper`
+
+폴더안에 `.gradle`, `gradlew`, `gradlew.bat` 파일 및 폴더가 생성되었는지 확인한다.
+
+만들어진 실행 파일을 실행해 본다.
+
+* Linux: `./gradlew`
+* Windows: `gradlew.bat`
+
+알아서 gradle를 내려 받아 실행가능한 환경을 만들어 준다.
+
+
+
+==== 방화벽에 막힌 환경에서 의존성 설정하기
+위의 과정을 방화벽으로 막힌곳에서는 제대로 되지 않을수 있다.
+
+===== gradle-wrapper.properties 파일 수정하기
+gradle/wrapper/gradle-wrapper.properties 파일을 열어 distributionUrl 을 수정해줍니다.
+
+https -> http 로 변경해줍니다.
+
+`distributionUrl=http\://services.gradle.org/distributions/gradle-5.1.1-bin.zip`
+
+
+===== build.gradle 파일
+repositories 관련 설정을 변경합니다.
+
+
+[source,groovy,numbered]
+----
+buildscript {
+  ...
+  repositories {
+    maven { url "http://devops.ssfshop.com/nexus/repository/maven-public/" }
+  }
+  ...
+}
+
+...
+
+repositories {
+  maven { url "http://devops.ssfshop.com/nexus/repository/maven-public/" }
+}
+...
+----
+
+===== settings.gradle 파일
+
+[source,groovy,numbered]
+----
+pluginManagement {
+  repositories {
+    maven { url "http://devops.ssfshop.com/nexus/repository/maven-public/" }
+    //gradlePluginPortal() // maven 설정을 주지 않았을때 기본으로 사용하는 저장소
+  }
+}
+
+rootProject.name = 'MyProject'
+----
+
+
+==== IDE 관련 Task 설정
+
+`./gradlew initSrc` 를 실행하여 src 폴더 생성
+
+`./gradlew cleanEclipse eclipse` 를 실행하여 `.project` 파일이 생성되는 것을 확인
+
+
+==== IDE로 프로젝트 띄우기
+
+
+== 개발 시작
+=== Main 만들기
+
+* src/main/java/com/myproject 패키지 만들기
+* MyProjectMain.java 만들기
++
+[source,java,numbered]
+----
+package com.myproject;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MyProjectMain {
+	public static void main(String[] args) {
+		SpringApplication.run(MyProjectMain.class, args);
+	}
+}
+----
+
+`@SpringBootApplication`  = `@EnableAutoConfiguration` + `@ComponentScan` + `@SpringBootConfiguration`
+
+* `@EnableAutoConfiguration`: 클래스 패스에 포함된 라이브러리를 검사하여 적절한 설정을 자동으로 활성화
+* `@ComponentScan`: `SpringApplication.run` 에 넘겨준 Main Configuration 클래스 이하 경로의 Component를 Scan
+* `@SpringBootConfiguration`: `@Configuration` 과 마찬가지로 설정이 기술되는 클래스라는 표기(Marker)
+
+
+=== application.properties 파일 만들기
+* src/main/resources/application.properties 파일  만들기
+
+지금은 아무런 내용이 없어도 됩니다. 없으면 모두 기본 설정으로 동작함.
+
+https://docs.spring.io/spring-boot/docs/2.1.2.RELEASE/reference/htmlsingle/#common-application-properties 참조
+
+=== Controller 만들기
+* src/main/java/com/myproject/controller 패키지 만들기
+* ExampleController.java 만들기
+
+
+== 실행해보기
+
+=== IDE에서 실행
+IDE에서 MyProjectMain을 실행합니다.
+
+=== gradle로 실행
+----
+./gradlew bootRun
+----
+
+=== 실행가능한 jar 로 실행
+
+----
+./gradlew bootJar
+----
+
+build/libs 폴더를 확인하면 `MyProject-0.0.1-SNAPSHOT.jar` 파일이 만들어져 있습니다.  다음과 같이 실행할수 있습니다.
+
+----
+java -jar MyProject-0.0.1-SNAPSHOT.jar
+----
+
+
+== 여기 까지의 설정에 대한 시간을 더 단축하고 싶다면
+https://start.spring.io 에서 기본 설정되어 있는 압축파일을 내려 받아 바로 개발 시작 할수 있음
+
+
+
+
+== 추가 설정
+이 이후 부터는 기본적인 추가 설정입니다.
+
+=== MyBatis 사용하기
+
+
+==== 의존성 추가하기
+`build.gradle` 에 다음 내용을 추가합니다.
+
+[source,groovy,numbered]
+----
+...
+
+dependencies {
+  ...
+  implementation     'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
+  testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:1.3.2'
+
+  implementation 'org.hsqldb:hsqldb' // 빠른 테스트를 위한 In-Memory DB
+  ...
+}
+----
+
+`./gradlew eclipse` 를 실행하여 의존성을 내려 받음.
+
+
+==== 설정 추가
+
+MyProjectMain 에 `@MapperScan` 설정을 추가한다.
+
+[source,java,numbered]
+----
+...
+import org.mybatis.spring.annotation.MapperScan;
+
+@SpringBootApplication
+@MapperScan(basePackageClasses=MyProjectMain.class)
+public class MyProjectMain {
+...
+----
+
+MyProjectMain 이하 하위 패키지의 클래스들중 `@Mapper`가 붙은 클래스를 찾아 Mapper로 등록하게 된다.
+
+=== Mapper 추가
+
+* `src/main/java/com/myproject/mapper` 패키지 생성
+* `ExampleMapper.java` 파일 생성
++
+[source,java,numbered]
+----
+package com.myproject.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ExampleMapper {
+	String selectFromDB();
+}
+----
+
+
+==== SQL XML 추가
+* `src/main/resources/com/myproject/mapper` 패키지 생성
+* `ExampleMapper.xml` 파일 생성
++
+[source,xml,numbered]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myproject.mapper.ExampleMapper">
+  <select id="selectFromDB" resultType="string">
+SELECT CURRENT_DATE AS today FROM (VALUES(0))
+  </select>
+</mapper>
+----
+
+=== Controller 수정
+ExampleController 수정
+
+
+[source,java,numbered]
+----
+...
+
+@RestController
+public class ExampleController {
+	@Autowired
+	ExampleMapper exampleMapper;
+
+	@RequestMapping("/")
+	String home() {
+		return "Hello World2! " + exampleMapper.selectFromDB();
+	}
+}
+----
+
+=== Mapper 와 SQL 파일을 같은 폴더에 두기
+Mybatis의 장점은 Java소스와 SQL 소스를 분리해주는데 있다. 하지만 파일이 분리되는 것은 좋으나 maven 방식의 소스폴더 구조상 `src/main/java` 와 `src/main/resources` 하위에 각기 java 파일과 xml 파일을 분리해두어 햐는 것 때문에 거리가 멀어지는 불편함이 있다.
+
+이런 문제를 극복하기 위해 Mapper 와 SQL XML을 같은 폴더에 두고 볼수 있게 할수 있다.
+
+* 일단 `ExampleMapper.xml` 파일을  `ExampleMaper.java` 와 같은 폴더로 이동한다.
+* `build.gradle` 에 다음을 추가한다.
++
+[source,groovy,numbered]
+----
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources","src/main/java"]
+            includes = ["**/*"]
+            excludes = ["**/*.java"]
+        }
+    }
+}
+----
++
+위의 설정을 통해 resouce 처리 과정에서 기본 폴더인 `src/main/resources` 에 추가적으로 폴더를 지정해서 resource 처리를 할수 있다.
+
+
+
+=== Lombok 사용하기
+Lombok은 IDE용 플러그인은 lombok.jar 안에 포함하고 있지만 빌드 도구용 플러그인을 가지고 있지 않습니다.
+gradle용 플러그인을 설치할 필요가 있습니다.
+
+build.gradle 에 다음 내용을 추가합니다.
+
+[source,groovy,numbered]
+----
+...
+plugins {
+  ...
+  id 'io.franzbecker.gradle-lombok' version '1.14'
+  ...
+}
+...
+lombok {
+  version = "1.18.4"
+  sha256 = ""
+}
+...
+----
