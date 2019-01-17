@@ -3,7 +3,7 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2017-08-04
 :showtitle:
 :page-layout: post
-:page-navtitle: Test에 대한 고찰
+:page-navtitle: 단일 책임 원칙 (The Single Responsibility Principle)
 :page-description: 단일 책임 원칙에 대한 엉클밥 형님의 글 번역
 :page-root: ../../../
 :page-tags: ['OOP', 'OOD', 'SRP', 'design pattern']
