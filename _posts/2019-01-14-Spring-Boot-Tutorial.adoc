@@ -160,65 +160,6 @@ rootProject.name = 'MyProject'
 
 
 
-==== 방화벽에 막힌 환경에서 의존성 설정하기
-위의 초기화 과정은 방화벽으로 막힌곳에서는 제대로 되지 않을수 있습니다.
-
-===== gradle-wrapper.properties 파일 수정하기
-
-* HTTPS 가 막힌 방화벽
-+
-gradle/wrapper/gradle-wrapper.properties 파일을 열어 distributionUrl 을 수정해줍니다.
-+
-https -> http 로 변경해줍니다.
-+
-----
-distributionUrl=http\://services.gradle.org/distributions/gradle-5.1.1-bin.zip
-----
-
-* 인터넷이 막인 방화벽 : 방화벽 내부의 웹서버에 올려놓고 해당 URL로 변경하면 됩니다.
-
-===== build.gradle 파일
-repositories 관련 설정을 변경합니다. 별도로 지정하지 않으면 maven central repository 를 기본으로 사용하게 됩니다. ( https://mvnrepository.com/repos/central )
-
-여기에서는 사설 Maven Repository를 지정하여 방화벽 내부에서 다운로드 할수 있게 합니다.
-
-[source,groovy,numbered]
-----
-buildscript {
-  ...
-  repositories {
-    maven { url "http://devops.ssfshop.com/nexus/repository/maven-public/" }
-    //mavenCentral()
-  }
-  ...
-}
-
-...
-
-repositories {
-  maven { url "http://devops.ssfshop.com/nexus/repository/maven-public/" }
-  //mavenCentral()
-}
-...
-----
-
-===== settings.gradle 파일
-여러 gradle 플러그인들을 다운로드 하기 위한 플로그인 저장소를 변경합니다. 별도로 지정하지 않으면 gradle plugin portal( https://plugins.gradle.org/m2/ )을 사용합니다.
-
-
-[source,groovy,numbered]
-----
-pluginManagement {
-  repositories {
-    maven { url "http://devops.ssfshop.com/nexus/repository/maven-public/" }
-    //gradlePluginPortal()
-  }
-}
-
-rootProject.name = 'MyProject'
-----
-
-
 === Gralde Repository에 대한 간단한 이해
 * NOTE: 중요한 내용은 아닙니다. 참고만 하세요
 
