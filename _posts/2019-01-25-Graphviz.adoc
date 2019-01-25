@@ -1,0 +1,411 @@
+= Graphviz 소개
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2019-01-25
+:toc:
+:toc-title: 목차
+:sectnums:
+:sectlinks:
+:showtitle:
+:page-navtitle: Graphviz 소개
+:page-description: Graphviz 소개
+:page-tags: ['diagram','graphviz']
+:page-root: ../../../
+
+== Graphviz 란?
+http://www.graphviz.org 에서 개발중인 오픈소스 다이어그램 생성기입니다. 
+
+웹 버전은 http://viz-js.com 에서 보실수 있죠 
+
+Markdown 처럼 문서로 다이어그램을 표기하고자 하는 욕망은 개발자에게  항상 있습니다. Plantuml 도 있지만 좀더 유연한 그래프가 필요할때 Graphviz 를 사용할수 있습니다. 
+
+== 기본 문법
+
+[source]
+----
+graph	:	[ strict ] (graph | digraph) [ ID ] '{' stmt_list '}'
+stmt_list	:	[ stmt [ ';' ] stmt_list ]
+stmt	:	node_stmt
+|	edge_stmt
+|	attr_stmt
+|	ID '=' ID
+|	subgraph
+attr_stmt	:	(graph | node | edge) attr_list
+attr_list	:	'[' [ a_list ] ']' [ attr_list ]
+a_list	:	ID '=' ID [ (';' | ',') ] [ a_list ]
+edge_stmt	:	(node_id | subgraph) edgeRHS [ attr_list ]
+edgeRHS	:	edgeop (node_id | subgraph) [ edgeRHS ]
+node_stmt	:	node_id [ attr_list ]
+node_id	:	ID [ port ]
+port	:	':' ID [ ':' compass_pt ]
+|	':' compass_pt
+subgraph	:	[ subgraph [ ID ] ] '{' stmt_list '}'
+compass_pt	:	(n | ne | e | se | s | sw | w | nw | c | _)
+----
+
+이걸 보고 바로 이해 하는 분은 없을겁니다. 
+
+== 기본적인거 따라해보기
+하나씩 따라해보죠 
+
+=== 그래프를 하나 그려보겠습니다. 
+[source]
+....
+graph {
+	a
+}
+....
+
+[graphviz]
+....
+graph {
+	a
+}
+....
+
+=== 라벨 속성 주기
+여기에서 `a` 는 그려질 노드의 id 입니다. 별도로 label을 주지 않으면 id를 label로 사용하죠
+
+[source]
+....
+graph {
+	a [label="Node A"]
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A"]
+}
+....
+
+이런식으로 각 노드에 `[]` 로 노드의 속성을 기술할수 있습니다. 
+
+=== 여러 노드 그리기
+노드를 두개 그려 볼까요?
+
+[source]
+....
+graph {
+	a
+	b
+}
+....
+
+[graphviz]
+....
+graph {
+	a
+	b 
+}
+....
+
+당연히 둘다 라벨을 줄수 있습니다. 
+
+[source]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+}
+....
+
+=== 여러 속성
+이번엔 색상 속성을 주어 볼까요?
+[source]
+....
+graph {
+	a [label="Node A" color=red]
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A" color=red]
+}
+....
+
+색상명을 주면 그래프의 색상이 변경됩니다 
+
+NOTE: 색상 이름 목록은 https://graphviz.gitlab.io/_pages/doc/info/colors.html 를 참고하세요 
+
+RGB 형태로 줄수도 있습니다. 
+
+[source]
+....
+graph {
+	a [label="Node A" color="#FF0000"]
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A" color="#FF0000"]
+}
+....
+
+
+NOTE: 전체 속성 목록은 https://graphviz.gitlab.io/_pages/doc/info/attrs.html 에서 참고하시면 됩니다. 
+
+=== 노드 연결 
+그래프라 함은 서로 연결선이 있어야 하겠죠? 
+
+[source]
+....
+graph {
+	a -- b
+}
+....
+
+[graphviz]
+....
+graph {
+	a -- b
+}
+....
+
+`--` 좌 우에 노드를 기술해주면 됩니다. 
+
+==== 노드에 속성을 주고 싶다면 노드 선언을 먼저 하고 진행하면 됩니다. 
+
+[source]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+	a -- b
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+	a -- b
+}
+....
+
+=== 하나가 여러개에 연결될땐 어떻게 할까요?
+[source]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+	c [label="Node C"]
+	a -- {b c}
+
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+	c [label="Node C"]
+	a -- {b c}
+}
+....
+
+== 그럼 화살표는?
+
+화살표를 가지는 그래프는 `digraph` 입니다. 
+[source]
+....
+digraph {
+	a [label="Node A"]
+	b [label="Node B"]
+	a -- b
+}
+....
+
+[graphviz]
+....
+digraph {
+	a [label="Node A"]
+	b [label="Node B"]
+	a -> b
+}
+....
+
+== Edge 에 속성 주기
+물론 graph 에서도 화살표를 표현할수는 있지만 기본적으로는 화살표를 표현하지 않습니다.
+
+[source]
+....
+graph {
+	a [label="Node A"]
+	b [label=Node B]
+	a -- b [dir="forward"]
+}
+....
+
+[graphviz]
+....
+graph {
+	a [label="Node A"]
+	b [label="Node B"]
+	a -- b [dir=forward color=red]
+}
+....
+
+`--` 나 `->` 로 표시된 것은 edge를 표시하는 것이며, edge에도 위처럼 속성을 줄수 있습니다. 
+
+== 원은 질렸다 다른 모양은?
+
+[source]
+....
+graph {
+	a
+	b [shape=box]
+	c [shape=ellipse]
+	d [shape=oval]
+	e [shape=circle]
+	f [shape=point]
+}
+....
+
+
+[graphviz]
+....
+graph {
+	a
+	b [shape=box]
+	c [shape=ellipse]
+	d [shape=oval]
+	e [shape=circle]
+	f [shape=point]
+}
+....
+
+NOTE: 다음 URL에서 지원하는 모든 Shape를 볼수 있습니다.  https://graphviz.gitlab.io/_pages/doc/info/shapes.html#polygon
+
+== 난 기본으로 사강형을 쓰고 싶은데?
+
+[source]
+....
+graph {
+	# 이 그래프에서의 node 기본값 지정
+	node [shape=box]
+
+	a
+	b 
+	c 
+	d 
+	e 
+	f 
+}
+....
+
+
+[graphviz]
+....
+graph {
+	node [shape=box]
+
+	a
+	b 
+	c 
+	d 
+	e 
+	f 
+}
+....
+
+== 묶음 처리는 어떻게?
+
+[source]
+....
+graph {
+	subgraph cluster01 {
+			a -- b
+			a -- c
+			b -- c
+	}
+	subgraph cluster02 {
+		d 
+		e 
+		f
+	}	 
+}
+....
+
+[graphviz]
+....
+graph {
+	subgraph cluster01 {
+			a -- b
+			a -- c
+			b -- c
+	}
+	subgraph cluster02 {
+		d 
+		e 
+		f
+	}	 
+}
+....
+
+
+== b,c 가 같은 레벨이면 좋겠는데?
+
+[source]
+....
+graph {
+	subgraph cluster01 {
+			a -- b
+			a -- c
+			b -- c
+			{rank = same; b; c;}
+	}
+	subgraph cluster02 {
+		d 
+		e 
+		f
+	}	 
+}
+....
+
+
+[graphviz]
+....
+graph {
+	subgraph cluster01 {
+			a -- b
+			a -- c
+			b -- c
+			{rank = same; b; c;}
+	}
+	subgraph cluster02 {
+		d 
+		e 
+		f
+	}	 
+}
+....
+
+기본적으로 graphvis는 계층을 가지는 다이어그램을 그려주는 툴이므로, 같은 계층에 위치한 노드들을 나열하여 정리 할수 있다. 
+
+낮은 계층은 왼쪽 위, 높은 계층은 오른쪽 아래에 위치한다.
+
+rank는 다음의 값을 가질수 있다. 
+
+* "same" : 같은 계층에 위치한다. 
+* "min": 제일 낮은 계층에 위치한다. 
+* "source"
+* "max": 제일 높은 계층에 위치한다. 
+* "sink": max와 같다. 
+
+
+NOTE: rank 같은 속성은 괄호 안에 기술해야함
