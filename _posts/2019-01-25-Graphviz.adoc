@@ -505,3 +505,74 @@ graph {
 
 
 NOTE: 더 많은 스타일은 https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:style 에서 참고 하세요 
+
+
+== 연결선이 직선 말고는 없나?
+
+[source]
+....
+digraph Orthogonal {
+  graph [label="Orthogonal edges", splines=line, nodesep=0.8]
+  node [shape=box]
+  a->{b c} 
+  b->{d e}
+  c->{f g}
+}
+....
+
+[graphviz]
+....
+digraph Orthogonal {
+  graph [label="Orthogonal edges", splines=line, nodesep=0.8]
+  node [shape=box]
+  a->{b c} 
+  b->{d e}
+  c->{f g}
+}
+....
+
+[source]
+....
+digraph Orthogonal {
+  graph [label="Orthogonal edges", splines=ortho, nodesep=0.8]
+  node [shape=box]
+  a->{b c} 
+  b->{d e}
+  c->{f g}
+}
+....
+
+[graphviz]
+....
+digraph Orthogonal {
+  graph [label="Orthogonal edges", splines=ortho, nodesep=0.8]
+  node [shape=box]
+  a->{b c} 
+  b->{d e}
+  c->{f g}
+}
+....
+
+
+[source]
+....
+digraph Orthogonal {
+  graph [label="Orthogonal edges", splines=curved, nodesep=0.8]
+  node [shape=box]
+  a->{b c} 
+  b->{d e}
+  c->{f g}
+}
+....
+
+[graphviz]
+....
+digraph Orthogonal {
+  graph [label="Orthogonal edges", splines=curved, nodesep=0.8]
+  node [shape=box]
+  a->{b c} 
+  b->{d e}
+  c->{f g}
+}
+....
+
