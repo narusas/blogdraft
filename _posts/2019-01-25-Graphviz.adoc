@@ -329,9 +329,10 @@ graph {
 ....
 graph {
 	subgraph cluster01 {
-			a -- b
-			a -- c
-			b -- c
+		label="Cluster 1"
+		a -- b
+		a -- c
+		b -- c
 	}
 	subgraph cluster02 {
 		d 
@@ -345,15 +346,19 @@ graph {
 ....
 graph {
 	subgraph cluster01 {
-			a -- b
-			a -- c
-			b -- c
+		label="Cluster 1"
+		a -- b
+		a -- c
+		b -- c
+		c
 	}
 	subgraph cluster02 {
 		d 
 		e 
 		f
 	}	 
+	# 서브그래프 를 벗어 나는 연결은 바깥쪽에 기술
+	c -- d
 }
 ....
 
@@ -409,3 +414,28 @@ rank는 다음의 값을 가질수 있다.
 
 
 NOTE: rank 같은 속성은 괄호 안에 기술해야함
+
+== Class diagram을 그려야 하는데 화살표가 부족해 
+[source]
+....
+graph {
+	node [shape=box]
+	a -> b [arrowhead=diamond]
+	a -> c [arrowhead=onormal]
+	a -> d [arrowhead=onormal]
+
+}
+....
+
+[graphviz]
+....
+graph {
+	node [shape=box]
+	a -> b [arrowhead=diamond]
+	a -> c [arrowhead=onormal]
+	a -> d [arrowhead=onormal]
+
+}
+....
+
+NOTE: https://graphviz.gitlab.io/_pages/doc/info/arrows.html 참조
