@@ -524,8 +524,8 @@ NOTE: 더 많은 스타일은 https://graphviz.gitlab.io/_pages/doc/info/attrs.h
 
 [source]
 ....
-digraph Orthogonal {
-  graph [label="Orthogonal edges", splines=line, nodesep=0.8]
+digraph Line {
+  graph [label="Line edges", splines=line, nodesep=0.8]
   node [shape=box]
   a->{b c} 
   b->{d e}
@@ -535,8 +535,8 @@ digraph Orthogonal {
 
 [graphviz]
 ....
-digraph Orthogonal {
-  graph [label="Orthogonal edges", splines=line, nodesep=0.8]
+digraph Line {
+  graph [label="Line edges", splines=line, nodesep=0.8]
   node [shape=box]
   a->{b c} 
   b->{d e}
@@ -569,8 +569,8 @@ digraph Orthogonal {
 
 [source]
 ....
-digraph Orthogonal {
-  graph [label="Orthogonal edges", splines=curved, nodesep=0.8]
+digraph Curved {
+  graph [label="Curved edges", splines=curved, nodesep=0.8]
   node [shape=box]
   a->{b c} 
   b->{d e}
@@ -580,8 +580,8 @@ digraph Orthogonal {
 
 [graphviz]
 ....
-digraph Orthogonal {
-  graph [label="Orthogonal edges", splines=curved, nodesep=0.8]
+digraph Curved {
+  graph [label="Curved edges", splines=curved, nodesep=0.8]
   node [shape=box]
   a->{b c} 
   b->{d e}
