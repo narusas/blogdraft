@@ -273,6 +273,7 @@ graph {
 	d [shape=oval]
 	e [shape=circle]
 	f [shape=point]
+	h [shape=diamond]
 }
 ....
 
@@ -286,6 +287,11 @@ graph {
 	d [shape=oval]
 	e [shape=circle]
 	f [shape=point]
+	h [shape=diamond]
+	i [shape=cylinder]
+	j [shape=note]
+	k [shape=tab]
+
 }
 ....
 
@@ -419,7 +425,6 @@ NOTE: rank 같은 속성은 괄호 안에 기술해야함
 [source]
 ....
 graph {
-	node [shape=box]
 	a -> b [arrowhead=diamond]
 	a -> c [arrowhead=onormal]
 	a -> d [arrowhead=onormal]
@@ -430,12 +435,73 @@ graph {
 [graphviz]
 ....
 graph {
-	node [shape=box]
-	a -> b [arrowhead=diamond]
-	a -> c [arrowhead=onormal]
-	a -> d [arrowhead=onormal]
-
+	# 기본값이  normal입니다. 
+	a -- b1 [dir="forward"]
+	a -- b2 [dir="forward" arrowhead=normal]
+	a -- c [dir="forward" arrowhead=onormal]
+	a -- d [dir="forward" arrowhead=diamond]
+	a -- e [dir="forward" arrowhead=odiamond]
+	a -- f [dir="forward" arrowhead=vee]
+	# 까치발 ^^ 
+	a -- g [dir="forward" arrowhead=crow]
+	a -- h [dir="forward" arrowhead=dot]
 }
 ....
 
-NOTE: https://graphviz.gitlab.io/_pages/doc/info/arrows.html 참조
+`o` 로 시작하면 비어있는 화살표가 됩니다. 
+
+
+
+NOTE: 옵션이 훨씬 더 많이 있습니다. https://graphviz.gitlab.io/_pages/doc/info/arrows.html 참조 하세요.
+
+
+== 점선을 쓰고 싶은데?
+=== 노드를 변경할떄 
+[source]
+....
+graph {
+	a [style=solid]
+	b [style=dashed]
+	c [style=dotted]
+	d [style=bold]
+	e [style=filled]
+}
+....
+
+[graphviz]
+....
+graph {
+	a [style=solid]
+	b [style=dashed]
+	c [style=dotted]
+	d [style=bold]
+	e [style=filled]
+}
+....
+
+=== 연결선을 변경할떄 
+
+[source]
+....
+graph {
+	a -- b0 [dir="forward" style=solid]
+	a -- b1 [dir="forward" style=dashed]
+	a -- b2 [dir="forward" style=dotted]
+	a -- b3 [dir="forward" style=bold]
+	
+}
+....
+
+[graphviz]
+....
+graph {
+	a -- b0 [dir="forward" style=solid]
+	a -- b1 [dir="forward" style=dashed]
+	a -- b2 [dir="forward" style=dotted]
+	a -- b3 [dir="forward" style=bold]
+	
+}
+....
+
+
+NOTE: 더 많은 스타일은 https://graphviz.gitlab.io/_pages/doc/info/attrs.html#k:style 에서 참고 하세요 
