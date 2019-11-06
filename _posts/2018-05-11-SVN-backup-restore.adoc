@@ -1,6 +1,6 @@
 = SVN 백업/복구, 증분백업/복구
 Jisung, Ahn <narusas.gmail.com>
-v1.1, 2019-11-06
+v1.1, 2018-05-11
 :showtitle:
 :page-navtitle: SVN 백업 및 복구, 증분백업, 증분복구
 :page-description: SVN 백업/복구 및  증분 백업/복구를 다룹니다.
