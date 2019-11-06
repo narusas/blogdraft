@@ -234,7 +234,7 @@ function feed(enum animalType) {
            feedGrain();return;
     case LION:
           FeedMeet(); return;
-    …
+    ...
   }
 }
 function training(enum animalType) {
@@ -243,7 +243,7 @@ function training(enum animalType) {
            trainRun();return;
     case LION:
           trainHunt(); return;
-    …
+    ...
 }
 ----
 
@@ -257,7 +257,7 @@ interface Animal {
 
 Class Horse extends Animal{
   Void feed(){
-    … // Eat grain
+    ... // Eat grain
   }
   void training() {
     .. // run
@@ -265,7 +265,7 @@ Class Horse extends Animal{
 }
 Class Lion extends Animal{
   Void feed(){
-    … // Eat meat
+    ... // Eat meat
   }
   void training() {
     .. // hunt
@@ -293,7 +293,7 @@ class Trainer {
 
 관점 지향 프로그래밍(Aspect Oriented Programming)은 시점에 따른 구조화를 수행하는 패러다임 입니다.
 
-여기에서 시점이란 메소드를 호출하는 순간, 메소드가 값을 반환하는 순간,  클래스의 필드를 읽으려고 하는 순간, 클래스의 필드에 값을 쓰려고 하는 순간, 예외가 발생한 순간… 등 뭐라 정의 하기는 애매하지만 우리 모두 알고 있는 그 시점입니다.  (Crosscutting concerns이라고 보통 이야기 하지만 crosscutting concerns에 대한 공통의 정의는 없습니다 ^^)
+여기에서 시점이란 메소드를 호출하는 순간, 메소드가 값을 반환하는 순간,  클래스의 필드를 읽으려고 하는 순간, 클래스의 필드에 값을 쓰려고 하는 순간, 예외가 발생한 순간... 등 뭐라 정의 하기는 애매하지만 우리 모두 알고 있는 그 시점입니다.  (Crosscutting concerns이라고 보통 이야기 하지만 crosscutting concerns에 대한 공통의 정의는 없습니다 ^^)
 
 특정 시점을 정의하고 (Pointcut), 수행하려고 하는 작업을 정의하고(Advide) , 두 가지것이 묶인것을 관점(Aspect)라고 정의합니다.
 
@@ -394,7 +394,7 @@ public void action() throws Exception {
 
 
 =====  Spring AOP는 Proxy 기반으로 별도의 객체가 Bean을 호출하는 방식이 기본입니다.
-Client가 대상 Bean의 메소드를 호출할때 중간에 Proxy 객체가 그 메시지를 대신 받아서 트랜잭션을 실행시키고 bean의 메소드를 실행시키는 것인데요…
+Client가 대상 Bean의 메소드를 호출할때 중간에 Proxy 객체가 그 메시지를 대신 받아서 트랜잭션을 실행시키고 bean의 메소드를 실행시키는 것인데요...
 
 Bean 객체 생성되면 Bean 객체는 Aspect Proxy 객체에 쌓여서 다른 Client에 주입되어 사용되게 됩니다.
 
@@ -403,7 +403,7 @@ Bean 객체 생성되면 Bean 객체는 Aspect Proxy 객체에 쌓여서 다른 
 ----
 
 class Service {
-  @Transactional public void save(){…};
+  @Transactional public void save(){...};
 }
 
 
@@ -674,7 +674,7 @@ class OrderService {
 @Component
 class OrderHistoryService {
   @Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void recordOrderComplete() {…}
+  public void recordOrderComplete() {...}
 }
 ----
 
@@ -901,7 +901,7 @@ TxManager 1개에 XA Datasource(Composite) 1개.
 
 
 
-그런데 환경적으로 datasource가 증가되어 2개 이상인데, 모든 Datasource를 XA Datasource로 등록하지 못하는 경우가 있습니다. XA를 지원하지 않는 DB라던가, 성능 문제때문에 XA를 사용할수 없는 경우라던가, XA에 과정에서 오류가 발생한다던가….
+그런데 환경적으로 datasource가 증가되어 2개 이상인데, 모든 Datasource를 XA Datasource로 등록하지 못하는 경우가 있습니다. XA를 지원하지 않는 DB라던가, 성능 문제때문에 XA를 사용할수 없는 경우라던가, XA에 과정에서 오류가 발생한다던가....
 
 하지만 그런 Datasource에서도 Tx는 지원해야 합니다.   따라서 Tx Manager가 여러개가 Spring context에 등록 될 수 있습니다.
 
@@ -912,7 +912,7 @@ TxManager 1개에 XA Datasource(Composite) 1개.
 
 ----
 @Transactional(txManager=‘txManager1")
-public void action(){ … }
+public void action(){ ... }
 ----
 
 
