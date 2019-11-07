@@ -83,7 +83,7 @@ Connection을 얻어오고, Statement를 만들어 SQL을 실행한후, 정리�
 
 [source,java,numbered]
 ----
-Connection conn = Driver.getConnection("url","id","pw);
+Connection conn = Driver.getConnection("url","id","pw");
 Statement stmt = conn.createStatement();
 ResultSet rs = stmt.executeQuery("select * from goods");
 while(rs.next()) {
@@ -101,7 +101,7 @@ conn.close();
 [source,java,numbered]
 ----
 
-Connection conn = Driver.getConnection("url","id","pw);
+Connection conn = Driver.getConnection("url","id","pw");
 conn.setAutoCommit(false);
 Statement stmt1 = conn.createStatement();
 ResultSet rs = stmt1.executeQuery("select * from goods");
@@ -132,7 +132,7 @@ conn.close();
 [source,java,numbered]
 ----
 public void recordGoodNameList(String type) {
-  Connection conn = Driver.getConnection("url","id","pw);
+  Connection conn = Driver.getConnection("url","id","pw");
   conn.setAutoCommit(false);
   try {
     List<String> names = findGoodsNames(conn,  type);
