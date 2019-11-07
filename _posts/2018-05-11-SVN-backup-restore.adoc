@@ -83,9 +83,9 @@ repo라는 저장소에 덤프 파일을 복원 합니다.
 
 === 증분 덤프 복원하기
 ----
-svnadmin /path/to/repo < ~/repos-0-1000.svn_dump
-svnadmin /path/to/repo < ~/repos-1000-2000.svn_dump
-svnadmin /path/to/repo < ~/repos-2000-3000.svn_dump
+svnadmin load  /path/to/repo < ~/repos-0-1000.svn_dump
+svnadmin load  /path/to/repo < ~/repos-1000-2000.svn_dump
+svnadmin load  /path/to/repo < ~/repos-2000-3000.svn_dump
 ----
 이전에 증분했던 순서대로 다시 차례대로 넣어 주면 됩니다.
 
