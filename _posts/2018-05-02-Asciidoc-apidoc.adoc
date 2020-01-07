@@ -1,12 +1,12 @@
 = Asciidoc을 이용한 기술 문서 작성
 Jisung, Ahn <narusas.gmail.com>
 v1.0, 2018-05-02
+:plantuml-server-url: https://www.plantuml.com/plantuml
 :showtitle:
 :page-navtitle: Asciidoc을 이용한 기술 문서 작성
 :page-description: Asciidoc을 이용한 기술 문서 작성에 대해 다룹니다.
 :page-tags: ['asciidoc','asciidoctor','technical writing']
 :page-root: ../../../
-
 
 
 == 작성환경 만들기
@@ -20,7 +20,7 @@ v1.0, 2018-05-02
 rmv(ruby version manager)를 설치합니다.
 
 ----
- \curl -sSL https://get.rvm.io | bash -s stable
+ curl -sSL https://get.rvm.io | bash -s stable
  rvm reload
  rvm list known 으로 확인
 ----
@@ -233,6 +233,51 @@ intellij 의 asciidoc 플러그인을 swing 모드로 세팅하고 보는게 제
 
 ----
 
-image::2018-05-02-Asciidoc-apidoc-0850d.png[]
+image::../images/2018-05-02-Asciidoc-apidoc-0850d.png[]
+
+
+== Tip: PlantUml을 github pages에서 사용하기 
+문서의 메타 정보에 ```plantuml-server-url``` 를 추가 합니다. 
+....
+= Asciidoc을 이용한 기술 문서 작성
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2018-05-02
+:plantuml-server-url: https://www.plantuml.com/plantuml
+:showtitle:
+:page-navtitle: Asciidoc을 이용한 기술 문서 작성
+:page-description: Asciidoc을 이용한 기술 문서 작성에 대해 다룹니다.
+:page-tags: ['asciidoc','asciidoctor','technical writing']
+:page-root: ../../../
+....
+
+문서 중간에 plantuml 문서를 포함시키면  됩니다. 
+
+.소스
+----
+[plantuml]
+....
+autonumber
+
+title Initial
+participant Alice
+participant Tom
+
+Alice -> Tom: hello
+Tom -> Alice: hello response
+....
+----
+
+.출력
+[plantuml]
+....
+autonumber
+
+title Initial
+participant Alice
+participant Tom
+
+Alice -> Tom: hello
+Tom -> Alice: hello response
+....
 
 참고가 되셨기를.
