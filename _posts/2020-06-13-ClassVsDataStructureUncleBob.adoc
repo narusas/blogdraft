@@ -15,30 +15,30 @@ v1.0, 2020-06-13
 클래스가 뭔가요?
 
 A class is the specification of a set of similar objects. +
-클래스는 비슷한 객체들의 특성을 묶어둔것입니다. 
+클래스는 비슷한 객체들에 대한 규격(Specification)이죠 
 
 
 > What is an object? +
-객체는 뭔가요?
+그럼 객체는 뭔가요?
 
 An object is a set of functions that operate upon encapsulated data elements. +
-객체는 숨겨진 자료 요소에 기반한 기능의 목록입니다. 
+객체는 함께 묶인(Encapsulated) 자료 요소에 대한 기능(함수)들의 묶음이죠.
 
 
 > Or rather, an object is a set of functions that operate on implied data elements. +
-또는, 내제된 자료 요소에  기반한 기능의 목록일수도 있지요. 
+또는, 암시된(Implied) 자료 요소에  기반한 기능(함수)의 목록일수도 있지요. 
 
 What do you mean by implied data elements? +
-내제된(Implied) 자료 요소라는게 뭔가요?
+암시된(Implied) 자료 요소라는게 뭔가요?
 
 > The functions of an object imply the existence of some data elements; but that data is not directly accessible or visible outside of the object. +
-객체의 기능이 내포하는 의미는 어떤 종료의 데이터가 존재한다는 것입니다. 하지만 객체외부에서는 그것을 직접 접근할수도 없고, 볼수도 없죠. 
+객체가 어떤 기능들을 가진다는것이 암시하는 것은 어떤 데이터가 존재한다는 것입니다. 하지만 객체 외부에서는 그것을 직접 접근할수도 없고, 볼수도 없죠. 
 
 Isn’t the data inside the object? +
 데이터는 객체 내부에 있는거 아닌가요?
 
 > It could be; but there’s no rule that says it must be. From the point of view of the user, an object is nothing more than a set of functions. The data that those functions operate upon must exist, but the location of that data is unknown to the user. +
-그럴수도 있습니다. 하지만 그것이 반드시 따라야 하는 규칙은 아닙니다. 사용자의 관점에서 보자면, 객체는 그냥 기능의 묶음일 뿐입니다. 그 기능이 동작히기 위한 데이터는 반드시 필요하지만, 데이터의 위치를  사용자는 알수 없습니다. 
+그럴수도 있습니다. 하지만 데이터를 객체 내부에 두는것이 반드시 따라야 하는 규칙은 아닙니다. 사용자의 관점에서 보자면, 객체는 그냥 기능의 묶음일 뿐입니다. 그 기능이 동작히기 위한 데이터는 반드시 필요하지만, 데이터의 위치를 객체의 사용자는 알수 없습니다. 
 
 Hmmm. OK, I’ll buy that for the moment. +
 흠. 지금까지는 알겠어요. 
@@ -47,14 +47,14 @@ Hmmm. OK, I’ll buy that for the moment. +
 좋아요. 그럼 자료 구조는 뭔가요? 
 
 A data structure is a cohesive set of data elements. +
-자료 구조는 데이터 요소의 응집적 묶음입니다. 
+자료 구조는 데이터 요소들을 응축성있게 묶은 것입니다. 
 
 > Or, in other words, a data structure is a set of data elements operated upon by implied functions. +
-또는  다른 말로, 자료 구조는 내재된 기능에 의해 수행되는 자료 요소의 묶음이라고 할수도 있죠. 
+또는  다른 말로, 자료 구조는 기능(함수)를 암시하는 자료 요소의 묶음이라고 할수도 있죠. 
 
 
 OK, OK. I get it. The functions that operate on the data structure are not specified by the data structure but the existence of the data structure implies that some operations must exist. +
-네, 네 알았아요. 자료 구조에 대해 수행되는 기능들을 특정하지는 않았지만, 자료 구조가 존재한다는 사실 자체가 자체가 어떤 동작을 수행한다는 것을 암시한다는 것이죠. 
+네, 네. 그렇죠. 자료구조만 봤을때 그 자료구조로 동작하는 기능들을 말할수는 없지만, 자료 구조가 존재한다는 사실 자체가 자체가 어떤 동작을 수행한다는 것을 암시한다는 것이죠.  안그러면 자료구조가 필요가 없을테니까요. 
 
 
 > Right. Now what do you notice about those two definitions? +
@@ -63,14 +63,14 @@ OK, OK. I get it. The functions that operate on the data structure are not speci
 They are sort of the opposite of each other. +
 두개가 서로 반대되는 종류의 것이라는것이요. 
 
-Indeed. They are complements of each other. They fit together like a hand in a glove. +
+> Indeed. They are complements of each other. They fit together like a hand in a glove. +
 사실 두개는 서로를 보완하는 것들입니다. 서로는 장갑과 손처럼 딱 들어 맞죠
 
 * An Object is a set of functions that operate upon implied data elements. +
-객체는 내제된 자료 구조에 기반해 동작하는 기능의 묶음입니다. 
+객체는 암시된 자료 요소에 대해 동작하는 기능의 묶음입니다. 
 
 * A Data Structure is a set of data elements operated upon by implied functions +
-자료 구조는 내재된 기능들이 동작 기반이 되는 자료 요소입니다. 
+자료 구조는 암시된 기능들에 의해 동작하는 자료 요소의 묶음입니다. 
 
 
 Wow, so objects aren’t data structures. +
@@ -103,25 +103,25 @@ So then what do ORMs do? +
 
 
 > They transfer data between data structures. +
-ORM은 자료구조 사이에서 데이터를 전달하는 역활을 해줍니다. 
+ORM은 자료구조들 사이에서 데이터를 전달하는 역활을 해줍니다. 
 
 So they don’t have anything to do with Objects? +
-그럼 ORM은 객체에 대해서 무언가 해주고 있는게 아무것도 없는건가요? 
+그럼 ORM은 객체에 대해서 아무것도 하는게 없는건가요? 
 
 > Nothing whatever. There is no such thing as an Object Relational Mapper; because there is no mapping between database tables and objects. +
-아무것도 없습니다. 사실 객체-관계-매퍼 라는건 존재하지 않아요. 객체와 테이블 사이에는 매핑이라는것이  존재 하지 않거든요. 
+아무것도 없습니다. 사실 객체-관계-매퍼 라는건 존재하지 않아요. 객체와 테이블 사이에는 매핑이라는것이 존재 하지 않거든요. 
 
 But I thought ORMs built our business objects for us. +
 하지만, 저는 ORM이 비지니스 객체를 생성해 준다고 생각하고 있었는데요. 
 
 > No, ORMs extract the data that our business objects operate upon. That data is contained in a data structure loaded by the ORM. +
-아니에요. ORM은 우리의 비지니스 객체가 동작히기 위한 데이터를 추출해주는 겁니다.  그 데이터는 ORM에 의해 일어들여진 자료구조를 포함하고 있지요. 하지만 \
+아니에요. ORM은 우리의 비지니스 객체가 동작히기 위한 데이터를 추출해주는 겁니다. 데이터는 ORM에 의해 읽어져서 자료 구조 안에 들어가 있지요.
 
 But then doesn’t the business object contain that data structure? +
 그럼 비지니스 객체는 자료구조를 포함하고 있지 않은건가요?
 
 > It might. It might not. That’s not the business of the ORM.+ 
-그럴수도 있지요. 하지만 그건 ORM의 상관할 바가 아니죠
+포함하고 있을수도 있어요. 하지만 그건 ORM의 상관할 바가 아니죠.
 
 
 That seems like a minor semantic point. +
@@ -133,15 +133,14 @@ That seems like a minor semantic point. +
 Such as? +
 예를들면? 
 
-
 > Such as the design of the database schema vs. the design of the business objects. Business objects define the structure of the business behavior. Database schemas define the structure of the business data. Those two structures are constrained by very different forces. The structure of the business data is not necessarily the best structure for the business behavior. +
-데이터베이스 스키마 설계 vs 비지니스 객체의 설계같은 것이 예가 되겠죠. 비지니스 객체는 비지니스 행동의 구조를 정의합니다. 데이터베이스 스키마는 비지니스 자료의 구조를 정의합니다. 이 두개의 구조는 매우 다른 힘에 의해 제약받게 됩니다. 비지니스 자료구조는 비지니스 행동을 위한 최선의 구조를 가질 필요가 없습니다. 
+데이터베이스 스키마 설계 vs 비지니스 객체의 설계같은 것이 예가 되겠죠. 비지니스 객체는 비지니스 행동의 구조를 정의합니다. 데이터베이스 스키마는 비지니스 자료의 구조를 정의합니다. 이 두개의 구조는 서로 완전히 다른 힘에 의해 제약받게 됩니다. 비지니스 자료구조는 비지니스 행동을 위한 최선의 구조를 가질 필요가 없습니다. 
 
 Hmmm. That’s confusing. +
 음.. 조금 헷갈리네요. 
 
 > Think of it this way. The database schema is not tuned for just one application; it must serve the entire enterprise. So the structure of that data is a compromise between many different applications. +
-이렇게 생각해보죠. 데이터베이스 스키마는 딱 하나의 어플리케이션만을 위해 튜닝되지 않습니다. 스키마는 반드시 기업 전체의 요구에 맞춰져야합니다. 그렇기때문에 자료의 구조는 서로다른 여러 어플리케이션들의 타협점입니다. 
+이렇게 생각해보죠. 데이터베이스 스키마는 딱 하나의 어플리케이션만을 위해 튜닝되지 않습니다. 데이터베이스 스키마는 반드시 기업 전체의 요구를 충족시킬수 있어야합니다. 그렇기 때문에 DB에 저장되는 자료의 구조는 서로 다른 여러 어플리케이션들간에 타협된 결과입니다. 
 
 OK, I get that. +
 그건 이해 되네요 
@@ -151,40 +150,38 @@ OK, I get that. +
 
 
 Oh, I see. Since the database schema is a compromise of all the various applications, that schema will not conform to the object model of any particular application. +
-아, 알겠어요. 데이터베이스 스키마가 여러 어플리케이션의 타협이기 때문에, 스키마는 어떤 특정 어플리케이션의 객체모델과 일치시킬수 없는거군요. 
+아, 알겠어요. 데이터베이스 스키마가 여러 어플리케이션의 타협이기 때문에, 스키마는 어떤 특정 어플리케이션의 객체모델과 일치 시킬 수 없는거군요. 
 
 > Right! Objects and Data Structures are constrained by very different forces. They seldom line up very nicely. People used to call this the Object/Relational impedance mismatch. + 
-맞습니다!. 객체와 자료구조는 서로다른 힘에 의해 제약 받습니다. 두개가 멋지게 일치하는 일은 거의 일어나지 않습니다. 사람들은 이것을 객체-관계 임피던스 불일치라고 부르죠. 
+맞습니다!. 객체와 자료구조는 서로 다른 힘에 의해 제약 받습니다. 두개가 멋지게 일치하는 일은 거의 일어나지 않습니다. 사람들은 이것을 객체-관계 임피던스 불일치라고 부르죠. 
 
 I’ve heard of that. But I thought that impedance mismatch was solved by ORMs. +
 들어본거 같아요. 하지만 저는 그 문제가 ORM으로 해결 되는거라고 생각했어요 
 
 > And now you now differently. There is no impedance mismatch because objects and data structures are complementary, not isomorphic. +
-이제 다르다른것을 알았죠. 임피던스 불일치라는것은 존재하지 않아요. 객체와 자료구조는 보완관계에 있지, 비슷한 동형관계가 아니거든요. 
+이제 다르다는 것을 아셨죠. 임피던스 불일치라는것은 존재하지 않아요. 객체와 자료구조는 상호 보완 관계에 있지, 비슷한 동형관계가 아니거든요. 
 
 Say what? +
 뭐라고요? 
 
-
 > They are opposites, not similar entities. + 
-객체와 자료구조는 반대이지, 비슷한게 것들이 아니에요. 
+객체와 자료구조는 반대이지, 비슷한 것들이 아니에요. 
 
 
 Opposites? +
 반대라고요?
 
 > Yes, in a very interesting way. You see, objects and data structures imply diametrically opposed control structures. + 
-네, 흥미로운 방식으로 서로 반대입니다. 아시겠지만, 객체와 자료구조는 완전히 정 반대의 제어 구조를 의미해요. 
+네, 흥미로운 방식으로 서로 반대입니다. 아시겠지만, 객체와 자료구조는 완전히 정반대의 제어 구조를 의미해요. 
 
 Wait, what? +
 잠깐만요,  뭐라고요?
 
-
 > Consider a set of object classes that all conform to a common interface. For example, imagine classes that represent two dimensional shapes that all have functions for calculating the area and perimeter of the shape. +
-공통의 사용방법(인터페이스)을 만족하는 일련의 객체 클래스를 생각해봅시다. 예를들어 넚이와 직경을 구할수 있는 기능을 제공하는 2차원 형태를 표현하는 클래스를 생각해보죠.
+공통의 사용방법(인터페이스)을 만족하는 일련의 객체 클래스를 생각해봅시다. 예를들어 도형의 넓이(area)와 외경(perimeter)을 구할수 있는 기능을 제공하는 2차원 형태를 표현하는 클래스를 생각해보죠.
 
 Why does every software example always involve shapes? +
-소프트웨어 예제들은 왜  그리도 Shape를 좋아하는것까요? 항상 Shape가 나오네요. 
+소프트웨어 예제들은 왜 그리도 도형(Shape)를 좋아하는것까요? 항상 Shape가 나오네요. 
 
 
 > Let’s just consider two different types: Squares and Circles. It should be clear that the area and permimeter functions of these two classes operate on different implied data structures. It should also be clear that the way those operations are called is via dynamic polymorphism. +
@@ -196,7 +193,7 @@ Wait. Slow down. What? +
 
 
 > There are two different area functions; one for Square, the other for Circle. When the caller invokes the area function on a particular object, it is that object that knows what function to call. We call that dynamic polymorphism. +
-넓이 계산 함수가  두개 있겠죠? 하나는 사작형을 계산하는거, 하나는 원형을 계산하는거. 호출자가 특정 객체의 넙이(are) 함수를  호출해야만, 실제로 함수가 결정될지는 호출되는 객체에 따라 달라질겁니다. 이걸 동적 다형성이라고 부릅니다. 
+넓이 계산 함수가  두개 있겠죠? 하나는 정사각형을 계산하는거, 하나는 원형을 계산하는거. 호출자가 특정 객체의 넓이(are) 함수를  호출해야만, 실제로 함수가 결정될지는 호출되는 객체에 따라 달라질겁니다. 이걸 동적 다형성이라고 부릅니다. 
 
 OK. Sure. The object knows the implementation of its methods. Sure. +
 아, 그거요. 객체가 메소드 구현체를 안다는 거죠. 당연하죠
@@ -210,7 +207,7 @@ Discoominated whats? +
 
 
 > Discriminated Unions. In our case that’s just two different data structures. One for Square and the other for Circle. The Circle data structure has a center point, and a radius for data elements. It’s also got a type code that identifies it as a Circle. +
-구별된 공용 구조체(Discriminated Unions)입니다. 우리의 경우 단순히 서로 다른 자료구조일뿐이죠. 하나는 정사각형, 하나는 원형을 위한 자료구조 일겁니다. 원형 자료구조는 중심점, 반경을 자료 요소로 가질것입니다. 그리고 원형이라는 것을 나타내기 위한 타입 코드를 하나 가질급니다. 
+구별된 공용 구조체(Discriminated Unions)입니다. 우리의 경우 단순히 서로 다른 자료구조일뿐이죠. 하나는 정사각형, 하나는 원형을 위한 자료구조 일겁니다. 원형 자료구조는 중심점, 반경을 자료 요소로 가질것입니다. 그리고 원형이라는 것을 나타내기 위한 타입 코드를 하나 가질겁니다. 
 
 You mean like an enum? +
 enum 같은 걸 이야기 하는건가요? 
@@ -233,7 +230,7 @@ Um. Sure, for the two different cases. One for Square and the other for Circle. 
 
 
 OK, I see where you are going with this. In the data structure scenario the two implementations of the area function are together in the same function, they don’t “belong” (however you mean that word) to the type. +
-네, 이제 무슨 말을 하는지 알겠어요. 자료주고 시나리오에서는 두개의 구현이 같은 함수에 있었고, 그 함수는 타입에 속해 있지 않았죠. 
+네, 이제 무슨 말을 하는지 알겠어요. 자료구조 시나리오에서는 두개의 구현이 같은 함수에 있었고, 그 함수는 타입안에 있지 않죠. 
 
 > It gets better. If you want to add the Triangle type to the object scenario, what code must change? +
 훨씬 나아졌네요. 이제 당신이 삼각형을 객체 시나리오에 추가한다면, 어떤 코드가 변경되어야 하나요? 
@@ -242,11 +239,10 @@ No code changes. You just create the new Triangle class. Oh, I suppose the creat
 변경될게 없죠. 새로운 클래스를 만들면 되죠. 아, 객체 인스턴스를  생성하는 곳은 좀 바꾸어야 겠네요. 
 
 > Right. So when you add a new type, very little changes. Now suppose you want to add a new function - say the center function. +
-맞아요. 새로운 타입을 추가하고, 아주 조금의 수정을 가하고. 자 이제 새로운 함수를 추가 한다고 생각해보죠. 중심점 함수를 추가해볼까요 
+맞아요. 새로운 타입을 추가하고, 아주 조금의 수정을 가하고. 자 이제 새로운 함수를 추가 한다고 생각해보죠. 중심점을 구하는 기능를 추가해볼까요 
 
 Well then you’d have to add that to all three types, Circle, Square ,and Triangle. +
-그럼 원형, 정사각형, 삼각형 모두에 함수를 추가해야 되죠. 
-
+그럼 원형, 정사각형, 삼각형 모두에 기능을 추가해야 되죠. 
 
 > Good. So adding new functions is hard, you have to change each class. +
 네. 새로운 함수를 추가하는것은 모든 클래스를 변경해야 하기 때문에  힘들죠. 
@@ -270,23 +266,22 @@ Wow. It’s the exact opposite. +
 확실히 그렇죠. 리뷰해볼까요 
 
 * Adding new functions to a set of classes is hard, you have to change each class. +
-클래스들에 함수를 추가하는것, 모든 클래스를 변경해야 하기 때문에 어렵다 
+클래스들에 함수를 추가하는 것은 각 클래스들을 변경해야 하기 때문에 어렵다 
 
 * Adding new functions to a set of data structures is easy, you just add the function, nothing else changes. +
-자료 구조는 새로운 함수를 추가하는것은 쉽니다. 그냥 추가하면된다. 
+자료 구조에 새로운 함수를 추가하는 것은 쉽다. 그냥 추가하면된다. 
 
 * Adding new types to a set of classes is easy, you just add the new class. +
-객체 구조에서 새로운 타입을 추가하는것은 쉽다. 그냥 추가하면 된다. 
+객체 구조에서 새로운 타입을 추가하는 것은 쉽다. 그냥 추가하면 된다. 
 
 * Adding new types to a set of data structures is hard, you have to change each function. +
 새로운 타입을 자료구조에 추가하는 것은 어렵다. 각 함수를 모두 수정해야 한다. 
 
 Yeah. Opposites. Opposites in an interesting way. I mean, if you know that you are going to be adding new functions to a set of types, you’d want to use data structures. But if you know you are going to be adding new types then you want to use classes. +
-와, 완전히 반대네요. 흥미로운정도로 정반대군요. 그러니까, 새로운 많은 함수를 추가할 예정이 있다면 자료구조를 사용하는게 좋고, 많은 타입을 추가할 예정이 있다면 클래스를 쓰면 좋다는거네요 
-
+와, 완전히 반대네요. 흥미로운정도로 정반대군요. 그러니까, **새로운 많은 함수를 추가할 예정이 있다면 자료구조를 사용하는게 좋고, 많은 타입을 추가할 예정이 있다면 클래스를 쓰면 좋다는거네요 **
 
 > Good observation! But there’s one last thing for us to consider today. There’s yet another way in which data structures and classes are opposites. It has to do with dependencies. +
-제대로 봤어요! 하지만 오늘날에는 하나 더 고려할게 있습니다. 클래스와 자료구조가 정반대인 것에 의존성도 존재합니다. 
+제대로 봤어요! 하지만 오늘날에는 여기에 하나를 더 고려해야 합니다. 클래스와 자료구조가 정반대인 것에 의존성도 존재합니다. 
 
 Dependencies? +
 의존성이요? 
@@ -295,13 +290,13 @@ Dependencies? +
 네, 소스코드의 의존성의 방향말입니다. 
 
 OK, I’ll bite. What’s the difference?  +
-아하, 뭐가 다른거죠? 
+네 한번 물어보죠.  뭐가 다른거죠? 
 
 > Consider the data structure case. Each function has a switch statement that selects the appropriate implementation based upon the type code within the discriminated union. +
 자료구조에서 시작해보죠. 각각의 함수에 포함된 스위치문은 구별된 공용 구조체(Discriminated Unions)에 포함된 타입 코드를 보고 적절한 구현을 선택하게 될겁니다. 
 
 OK, that’s true. But so what? +
-네 그렇죠. 그래서 어떻게 되나요? 
+네 그건 당연한건죠. 그래서요?
 
 > Consider a call to the area function. The caller depends upon the area function, and the area function depends upon every specific implementation. +
 넓이 함수를 호출할때를 생각해보죠. 호출자는 넓이(area) 함수에 의존하고, 넓이 함수는 각 특정 구현에 의존하죠. 
@@ -314,7 +309,7 @@ What do you mean by “depends”? +
 
 
 OK, so the switch statement just calls those functions. +
-네, 그래서 스위치문에 그 함수들을 호출하겠죠. 
+네, 그래서 스위치문에서 그 함수들을 호출하겠죠. 
 
 
 > Imagine those functions are in different source files. +
@@ -322,7 +317,7 @@ OK, so the switch statement just calls those functions. +
 
 
 Then the source file with the switch statement would have to import, or use, or include, all those source files. +
-그럼 switch문이 있는 파일은 각각의 파일을 import/use/include 해야 겠네요 
+그럼 switch문이 있는 파일은 각각의 소스 파일을 import/use/include 해야 겠네요 
 
 
 > Right. That’s a source code dependency. One source file depends upon another source file. What is the direction of that dependency? +
@@ -366,11 +361,11 @@ OK, but this is reversed in the case of classes? +
 네 들어가 보죠. 넓이함수의 호출자는 인터페이스에 의존하고 있을겁니다. 그리고 구현체도 인터페이스에 의존하고 있죠.
 
 I see what you mean. The source file of the Square class imports, or uses, or includes the source file of the Shape interface. +
-네 뭘 말하고 싶은이 알겠어요. 정사각형(Square) 클래스의 소스 파일은 도형(Shape) 인터페이스의 소스 파일을 import/use/include 하겠지요. 
+네 뭘 말하고 싶은지 알겠어요. 정사각형(Square) 클래스의 소스 파일은 도형(Shape) 인터페이스의 소스 파일을 import/use/include 하겠지요. 
 
 
 > Right. The source files of the implementation point in the opposite direction of the call. They point from the implementation to the caller. At least that’s true for statically typed languages. For dynamically typed languages the caller of the area function depends upon nothing at all. The linkages get worked out at run time. +
-맞아요. 구현체의 소스파일은 호출의 반대지점에 있어요. 구현체에서 호출자로 의존성이 흐르게 되죠.최소한 정적 타이핑 언어에는 그렇죠. 동적 타이핑 언어에서는 더 심하죠. 아무것에도 의존하지 않아요. 연결(Linking)을 런타임에 진행하거든요. 
+맞아요. 구현체의 소스파일이 의존 하는 방향은 호출자의 반대 방향이죠. 구현체에서 호출자쪽으로 의존성의 방향이 그려지죠. 최소한 정적 타이핑 언어에는 그렇죠. 동적 타이핑 언어에서는 더 심하죠. 호출자는 아무것에도 의존하지 않아요. 연결(Linking)을 런타임에 진행하거든요. 
 
 Right. OK. So if you make a change to one of the implementations… +
 그렇네요. 그럼 내가 구현에 무언가 변경을 가하게 되면...
