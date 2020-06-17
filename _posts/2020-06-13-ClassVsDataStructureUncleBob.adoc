@@ -3,7 +3,7 @@ Jisung, Ahn <narusas.gmail.com>
 v1.0, 2020-06-13
 :showtitle:
 :page-navtitle: Class VS Data Structure
-:page-description: 엉클밥 형님의 Class vs Data Structure 번역  
+:page-description: 밥 삼촌의 Class vs Data Structure 번역  
 :page-tags: ['class','data structure', 'uncle bob']
 :page-root: ../../../
 
