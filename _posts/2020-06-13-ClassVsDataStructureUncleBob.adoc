@@ -103,7 +103,7 @@ So then what do ORMs do? +
 
 
 > They transfer data between data structures. +
-ORM은 자료구조들 사이에서 데이터를 전달하는 역활을 해줍니다. 
+ORM은 자료구조들 사이에서 데이터를 전달하는 역할을 해줍니다. 
 
 So they don’t have anything to do with Objects? +
 그럼 ORM은 객체에 대해서 아무것도 하는 게 없는 건가요? 
