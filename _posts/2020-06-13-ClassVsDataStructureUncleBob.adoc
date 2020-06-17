@@ -115,7 +115,7 @@ But I thought ORMs built our business objects for us. +
 하지만, 저는 ORM이 비지니스 객체를 생성해 준다고 생각하고 있었는데요. 
 
 > No, ORMs extract the data that our business objects operate upon. That data is contained in a data structure loaded by the ORM. +
-아니에요. ORM은 우리의 비지니스 객체가 동작히기 위한 데이터를 추출해주는 겁니다. 데이터는 ORM에 의해 읽어져서 자료 구조 안에 들어가 있지요.
+아니에요. ORM은 우리의 비지니스 객체가 동작하기 위한 데이터를 추출해주는 겁니다. 데이터는 ORM에 의해 읽어져서 자료 구조 안에 들어가 있지요.
 
 But then doesn’t the business object contain that data structure? +
 그럼 비지니스 객체는 자료구조를 포함하고 있지 않은건가요?
