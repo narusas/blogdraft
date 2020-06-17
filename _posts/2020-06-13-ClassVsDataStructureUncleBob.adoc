@@ -120,7 +120,7 @@ But I thought ORMs built our business objects for us. +
 But then doesn’t the business object contain that data structure? +
 그럼 비지니스 객체는 자료구조를 포함하고 있지 않은건가요?
 
-> It might. It might not. That’s not the business of the ORM.+ 
+> It might. It might not. That’s not the business of the ORM. + 
 포함하고 있을수도 있어요. 하지만 그건 ORM의 상관할 바가 아니죠.
 
 
