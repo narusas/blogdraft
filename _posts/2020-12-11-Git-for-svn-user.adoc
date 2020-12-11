@@ -1,0 +1,175 @@
+= SVN 유저를 위한 GIT 소개
+Jisung, Ahn <narusas.gmail.com>
+v1.0, 2020-12-11
+:showtitle:
+:sectnums:
+:page-navtitle: SVN 유저를 위한 GIT 소개
+:page-description: 이미 svn을 잘 사용하던 사람들을 위한 git 소개
+:page-tags: ['git','tutorial', 'svn', 'verion control']
+:page-root: ../../../
+:plantuml-server-url: http://www.plantuml.com/plantuml
+
+이 글의 대상은 이미 svn을 잘 사용해온 개발자들이며, 이들에게 git 의 개념을 소개하고 익숙하게 하는것이 목적입니다. 
+
+== Git 기초 
+
+=== SVN도 로컬 파일 시스템을 저장소로 사용할수 있다. 
+
+==== 저장소 만들기
+`svnadmin init c:\svnrepo`  
+
+로컬 파일 시스템에 svn 저장소를 만듭니다.  
+
+=> `git init` 
+
+현재 폴더에 `.git` 이름을 가지는 git 저장소를 만듭니다. 
+
+
+====  저장소 내용 내려 받기
+
+`cd c:\work; svn checkout c:\svnrepo` 
+
+svn 저장소에서 체크아웃 합니다. + 
+체크아웃 받은 폴더의 루트에  저장소와 연동하기 위한 메타정보를 저장하는 `.svn` 폴더를 생성합니다. 
+
+=> `git init` 
+
+현재 폴더가 git으로 관리되는 폴더가 됩니다. 
+
+SVN의 실제 저장소는 다른 곳을 사용하지만 git 저장소는 소스의 루트 폴더에 만들어지는 차이가 있습니다. 
+
+
+==== 파일 추가하기
+
+`svn add file` 
+
+`.svn` 내의 데이터 파일에 file이 관리 대상이 되었다는 정보를 `.svn` 안에 저장해둡니다. 
+
+=> `git add file` 
+
+git 저장소중에 커밋할 파일들을 별도로 관리하는 stage에 추가합니다. 
+
+
+==== 커밋 
+`svn commit file` 
+
+`c:\svnrepo` 저장소에 file 을 전송함. 저장소의 revision을 하나 증가 시키게 됩니다. 
+
+=> 
+`git commit`
+
+Stage에 추가된 파일들을 `.git` 저장소에 저장함. 커밋되는 파일 내용들을 SHA-1로 해싱하여 체크섬을 부여 합니다. 이 체크섬이 커밋에 대한 id로 사용됩니다. 
+
+
+
+=== 어디에서 달라지는가? 
+여러 사람이 같이 작업하기 위해 저장소를 공유해야 할때 부터 달라집니다. 
+
+* SVN은 단일 저장소를 여러 사람이 공유하는 모델입니다. +
+파일 저장소든, SSH 저장소든, 웹 저장소든 상관없이 하나의 저장소를 개발자들이 공유하게 됩니다. +
+누구든 커밋을 하면 단일 저장소의 내용이 바뀌고, 리비전이 올라갑니다. 
+
+
+* GIT는 분산된 저장소를 지원합니다. 
+내가 커밋하는 모든 내용은 여전히 로컬 내 소스 폴더 루트에 있는 `.git` 으로만 커밋됩니다. 
+
+내가 다른 사람과 소스를 공유하기 위해서는 별도의 공유용 저장소를 네트워크 상에 만들어야 합니다. +
+
+`git remote add foo https://github.com/user1/foo` 원격 저장소를 내 로컬 저장소에 연결하고
+
+`git push foo` 현재 브랜치 커밋들을 공유 저장소에 밀어넣을수(Push) 있습니다.
+
+원격 저장소는 여러 개를 가질수 있습니다 
+
+```
+git remote add bar https://github.com/user2/bar
+git push bar
+
+git remote add buzz https://github.com/user3/buzz
+git push buzz
+```
+
+*이렇게 변경 사항을 push 할때에만 실제로 소스를 공유할수 있게 됩니다.*
+
+
+
+
+
+== Git의 주요 개념 
+
+=== 로컬 저장소 
+git이 빠른 이유는 모든 동작이 로컬 파일로만 수행하기 때문입니다. 
+
+`git init` 를 실행하면 현재 디렉토리에 `.git` 폴더가 생성되고, git 관련 파일들이 만들어집니다. 
+
+이 폴더에 있는 파일들이 사실 우리가 다룰 전체 정보가 담기는 저장소입니다. 
+
+소스를 작성하고 git으로 commit을 하면, 그냥 `.git` 폴더에 데이터가 추가 되는것입니다. 
+
+원격 git 저장소의 정보 역시 매번 소스단위로 비교 하는것이 아닌 원격 저장소의 정보를 그냥 모두 가져와서 `.git` 에 저장해둡니다. 
+
+NOTE:: 당연히 원격 저장소의 정보를 내려받는것은 네트워크와 용량에 따라 느릴수 있습니다. 
+
+파일을 비교하면 이렇게 내려받은 로컬 파일로만 수행합니다. 
+
+서버와의 연동이 전혀 없이 로컬 파일로만 작업하기 때문에 빨리 동작하죠.
+
+.`.git` 파일 목록 
+----
+./.git
+./.git/config
+./.git/objects
+./.git/objects/pack
+./.git/objects/info
+./.git/HEAD
+./.git/info
+./.git/info/exclude
+./.git/description
+./.git/hooks
+./.git/hooks/commit-msg.sample
+./.git/hooks/pre-rebase.sample
+./.git/hooks/pre-commit.sample
+./.git/hooks/applypatch-msg.sample
+./.git/hooks/fsmonitor-watchman.sample
+./.git/hooks/pre-receive.sample
+./.git/hooks/prepare-commit-msg.sample
+./.git/hooks/post-update.sample
+./.git/hooks/pre-merge-commit.sample
+./.git/hooks/pre-applypatch.sample
+./.git/hooks/pre-push.sample
+./.git/hooks/update.sample
+./.git/refs
+./.git/refs/heads
+./.git/refs/tags
+----
+
+
+=== Git 커밋
+
+
+=== Git 브랜치
+
+
+=== 추가만 되는 Key - value DB
+
+
+
+
+== Git 기초 사용법
+
+
+== SVN과 달라지는 것 
+
+== 소스 버전 관리 방식의 차이 
+=== 중앙 저장소 
+
+=== 분산 저장소 
+
+흔히 svn을 사용하던것처럼 원격 git 서버의 소스들을 내 소스를 동기화는 어떻게 하지? 라고 생각이 드실겁니다. 
+
+git에서는 `git fetch` 명령으로 원격 git 서버의 소소들의 변경내역을 그냥 .git에 내려 받는것만 합니다. 
+
+그럼 `.git` 폴더내에 원격 서버의 정보들에 죽 추가가 되죠. 
+
+
+
